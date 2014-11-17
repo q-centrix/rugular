@@ -1,0 +1,5 @@
+source 'https://rubygems.org'
+
+gem 'rugular'
+gem 'guard-coffeescript', github: 'guard/guard-coffeescript', branch: 'master'
+gem 'guard-haml', github: 'shicholas/guard-haml'
