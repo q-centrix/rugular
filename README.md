@@ -1,5 +1,4 @@
-[![Build
-Status](https://travis-ci.org/shicholas/rugular.svg?branch=master)](https://travis-ci.org/shicholas/rugular)
+[![Build Status](https://travis-ci.org/currica/rugular.svg)](https://travis-ci.org/currica/rugular)
 
 # Rugular
 
