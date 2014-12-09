@@ -147,4 +147,4 @@ rugular build
 5. Create a new Pull Request
 
 ## License
-Copyright 2014. Nicholas Shook. MIT License.
+Copyright 2014. Q-Centrix. MIT License.
