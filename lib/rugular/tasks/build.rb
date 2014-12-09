@@ -1,3 +1,5 @@
+Dir.glob("#{__dir__}/helpers/**/*.rb").each {|file| require file}
+
 module Rugular
   class Build < Thor::Group
     include Thor::Actions

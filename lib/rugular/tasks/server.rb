@@ -1,3 +1,5 @@
+Dir.glob("#{__dir__}/helpers/**/*.rb").each {|file| require file}
+
 require 'open3'
 
 module Rugular
@@ -10,7 +12,8 @@ module Rugular
 
     def start_server
       Open3.popen2e(
-        "bundle exec foreman start --color --root=#{destination_root} --procfile=#{rugular_procfile}"
+        "bundle exec foreman start --color --root=#{destination_root}" \
+        "--procfile=#{rugular_procfile}"
       ) do |stdin, stdout_and_stderr, wait_thr|
         stdout_and_stderr.each_line { |line| puts line }
       end
@@ -19,7 +22,7 @@ module Rugular
     private
 
     def rugular_procfile
-      "#{__dir__}/Procfile"
+      "#{__dir__}/server/Procfile"
     end
   end
 end

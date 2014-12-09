@@ -1,3 +1,5 @@
+Dir.glob("#{__dir__}/helpers/**/*.rb").each {|file| require file}
+
 module Rugular
   class Generate < Thor::Group
     include Thor::Actions
@@ -17,12 +19,6 @@ module Rugular
     end
 
     private
-
-    def generate_controller
-      generate_sass
-
-      generate_test
-    end
 
   end
 end
