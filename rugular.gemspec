@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'rugular'
   spec.version       = Rugular::VERSION
   spec.authors       = ['Nicholas Shook']
-  spec.email         = ['nicholas.shook@gmail.com.com']
+  spec.email         = ['nshook@q-centrix.com']
   spec.summary       = %q{Rugular - a ruby scaffolding framework for AngularJS}
   spec.homepage      = 'http://rugular.info'
   spec.license       = 'MIT'
