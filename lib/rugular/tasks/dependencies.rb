@@ -4,9 +4,9 @@ module Rugular
   class Dependencies < Thor::Group
     include Thor::Actions
 
-    desc 'Installs dependencies (bundle, bower and npm)'
+    desc('Installs dependencies (bundle, bower and npm)')
 
-    Rugular::AppChecker.check_rugular!(self_task, new.destination_root)
+    Rugular::AppChecker.check_rugular!(self.name, new.destination_root)
 
     def bundle
       `bundle install`

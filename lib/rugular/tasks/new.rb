@@ -5,8 +5,8 @@ module Rugular
   class New < Thor::Group
     include Thor::Actions
 
-    argument :app_name, :desc => 'Name for your application'
-    desc 'Creates an initial folder structure for developing apps'
+    argument :app_name, desc: 'Name for your application'
+    desc('Creates an initial folder structure for developing apps')
 
     def self.source_root
       __dir__.chomp('/tasks')
@@ -28,12 +28,14 @@ module Rugular
       end
     end
 
+    def create_component_directory
+      empty_directory "#{app_name}/components"
+    end
+
     def installation_complete
-      puts <<-MEMO
-      Thank you for installing rugular, please finish setting up your project
-      with: `cd #{app_open_struct.name} && bundle install && bower install &&
-      npm install`
-      MEMO
+      puts "Thank you for installing Rugular, please finish setting up your "\
+        "project with: `cd #{app_open_struct.name} && bundle install && "\
+        "rugular dependencies`"
     end
 
     private

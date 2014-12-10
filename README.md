@@ -49,12 +49,6 @@ Structure](https://docs.google.com/document/d/1XXMvReO8-Awi1EZXAXS4PzDzdNvV6pGcu
 │   │   ├──  index.haml
 │   │   ├──  index.sass
 │   ├──  components/
-│   │   └──  navbar/
-│   │   │   ├──  navbar.directive.coffee
-│   │   │   ├──  navbar.directive.test.coffee
-│   │   │   ├──  navbar.html
-│   │   │   ├──  navbar.module.coffee
-│   │   │   ├──  navbar.sass
 │   ├──  404.html
 │   ├──  500.html
 │   ├──  favico.ico
@@ -90,45 +84,51 @@ protractor
 
 Please make sure you have mocha installed globally!
 
-## TODO
-
 ### Rugular Generators
 
-#### Create a Feature
+#### Create a Route
 
-TODO: not done yet
-
-A feature refers to a top-level angular module.
+A route creates a angular route, controller, and view in the app folder.
 
 ```bash
-rugular feature <feature_name>
+rugular generate route <route_name>
 ```
 
 This command will create a folder in the ``src/app`` directory that will
-contain a controller and service namespaced with a new module of the feature
-name. It will also register the new module in the ``app.module.js`` file.
+contain a controller and service namespaced with a new module of the route
+name if one dos not already exist. It will also register the new module in the
+``app.module.js`` file.
 
-An example of a feature is provided by the ``rugular new`` command; it can be
-found in the ``src/app/main`` directory.
-
-#### Create a Component
-
-A component refers to shareable, abstracted DOM elements.
+#### Create a Directive
 
 ```bash
-rugular component <component_name>
+rugular generate directive <directive_name>
 ```
 
-This command will create a folder in the ``components`` directory that will
-contain a directive namespaced with a new module of the feature
-name. It will also register the new module in the ``app.module.js`` file.
+This command will create a directive and controller namespaced with a new
+module of the feature name if one does not already exist. It will also register
+the new module in the ``app.module.js`` file.
 
-An example of a component is also provided by the ``rugular new`` command; that
-can be found in the ``src/components/navbar`` directory.
+#### Create a Factory (TODO)
+
+```bash
+rugular generate factory <factory_name>
+```
+
+This command will create contain a factory namespaced with a new module of the
+feature name if one does not already exist. It will also register the new
+module in the ``app.module.js`` file.
+
+### Creating a component
+
+A component refers to shareable, abstracted angular modules. To create a
+component, simply run any generator command with the ``-c`` option and the
+service will be created in the ``src/components`` folder.
+
+
+## TODO (need to build)
 
 ### Building the app
-
-TODO: not built yet
 
 Rugular builds a minified, compressed version of your app in the ``/dist``
 folder. To build the app run:

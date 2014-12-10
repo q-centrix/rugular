@@ -1,3 +1,3 @@
 module Rugular
-  VERSION = '0.0.89'
+  VERSION = '0.0.94'
 end
