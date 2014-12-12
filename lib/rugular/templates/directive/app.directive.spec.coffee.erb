@@ -1,0 +1,16 @@
+describe '<%= name %>', ->
+
+  describe '<%= name %>Controller', ->
+    controller = undefined
+
+    beforeEach angular.mock.module('<%= name %>')
+
+    beforeEach angular.mock.inject(($controller) ->
+      controller = $controller('<%= name %>Controller')
+      return
+    )
+
+    it 'should be created successfully', ->
+      expect(controller).to.be.defined
+      return
+

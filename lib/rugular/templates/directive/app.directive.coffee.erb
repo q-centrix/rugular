@@ -1,0 +1,23 @@
+<%= name %>Controller = ->
+  @title = <%= name %>
+  return
+
+<%= name %>Controller.$inject = []
+
+angular.module('<%= name %>').controller('<%= name %>Controller', <%= name %>Controller)
+
+<%= name %> = ->
+  directive =
+    bindToController: true
+    controller: <%= name %>Controller
+    controllerAs: 'vm'
+    restrict: 'E'
+    templateUrl: 'components/<%= name %>/<%= name %>.html'
+    scope:
+      number: '='
+
+  return directive
+
+<%= name %>.$inject = []
+
+angular.module('<%= name %>').directive('<%= name %>', <%= name %>)

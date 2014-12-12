@@ -2,12 +2,12 @@ module Rugular
   class AppChecker
     include Thor::Shell
 
-    def self.check_rugular!(self_task, root_directory)
-      new(task: self_task, root_directory: root_directory).check_rugular!
+    def self.check_rugular!(task_name, root_directory)
+      new(task_name: task_name, root_directory: root_directory).check_rugular!
     end
 
-    def initialize(task:, root_directory:)
-      @task_name = task.name.gsub(':', ' ')
+    def initialize(task_name:, root_directory:)
+      @task_name = task_name
       @root_directory = root_directory
     end
 

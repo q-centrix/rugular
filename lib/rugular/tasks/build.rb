@@ -4,9 +4,9 @@ module Rugular
   class Build < Thor::Group
     include Thor::Actions
 
-    desc 'Creates a minified, compressed version in the dist folder'
+    desc('Creates a minified, compressed version in the dist folder')
 
-    Rugular::AppChecker.check_rugular!(self_task, new.destination_root)
+    Rugular::AppChecker.check_rugular!(self.name, new.destination_root)
 
     # TODO: build from the ./.tmp folder
     def compile_coffeescript

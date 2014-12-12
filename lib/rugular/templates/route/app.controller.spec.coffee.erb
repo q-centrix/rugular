@@ -1,0 +1,19 @@
+describe '<%= name %>Controller', ->
+  controller = undefined
+  beforeEach ->
+    module '<%= name %>', ($provide) ->
+      specHelper.fakeStateProvider $provide
+      specHelper.fakeLogger $provide
+
+    specHelper.injector ($controller, $q, $rootScope) ->
+
+    controller = $controller('<%= name %>Controller')
+
+  describe '<%= name %> controller', ->
+    it 'should be created successfully', ->
+      expect(controller).to.be.defined
+
+    it 'should have title of <%= name %>', ->
+      expect(controller.title).to.equal '<%= name %>'
+
+  specHelper.verifyNoOutstandingHttpRequests()
