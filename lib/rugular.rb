@@ -32,5 +32,12 @@ module Rugular
       'generate',
       'generate an angular service'
     )
+
+    register(
+      ContinuousIntegration,
+      'ci',
+      'ci',
+      'run the Rugular tests once for CI'
+    )
   end
 end

@@ -20,6 +20,8 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'actionview',         '~> 4'
   spec.add_runtime_dependency 'guard',              '~> 2'
   # spec.add_runtime_dependency 'guard-coffeescript', '~> 2'
+  spec.add_runtime_dependency 'haml',               '~> 4'
+  spec.add_runtime_dependency 'sass',               '~> 3'
   spec.add_runtime_dependency 'guard-sass',         '~> 1'
   spec.add_runtime_dependency 'foreman',            '~> 0'
   spec.add_runtime_dependency 'therubyracer',       '~> 0'
