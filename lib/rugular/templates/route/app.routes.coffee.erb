@@ -2,8 +2,8 @@
   $urlRouterProvider.otherwise('/')
 
   $stateProvider.state '<%= name %>',
-    url: '<%= name %>'
-    templateUrl: './<%= name %>/index.html'
+    url: '/<%= name %>'
+    templateUrl: '/app/<%= name %>/<%= name %>.html'
     controller: '<%= name %>Controller'
     controllerAs: '<%= name %>'
 
