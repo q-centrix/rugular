@@ -126,6 +126,14 @@ component, simply run any generator command with the ``-c`` option and the
 service will be created in the ``src/components`` folder.
 
 
+## Running the Test Suite
+
+To run the test suite just once (such as in a continuous environment) execute:
+
+```bash
+rugular ci
+```
+
 ## TODO (need to build)
 
 ### Building the app

@@ -9,15 +9,15 @@ module Rugular
     Rugular::AppChecker.check_rugular!(self.name, new.destination_root)
 
     def bundle
-      `bundle install`
+      system('bundle install')
     end
 
     def bower
-      `bower install`
+      system('bower install')
     end
 
     def npm_install
-      `npm install`
+      system('npm install')
     end
 
     # Protractor needs to be installed globally

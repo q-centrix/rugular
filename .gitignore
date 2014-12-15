@@ -13,5 +13,6 @@
 *.a
 mkmf.log
 *.gem
+*.log
 .sass-cache/
 tags
