@@ -3,19 +3,29 @@
   %head
     %title Hello
 
+    -# <!--[if lte IE 8]>
+    -#   <script type="text/javascript">
+    -#     // define our custom directives here
+    -#     window.myCustomTags = ['myDirective'];
+    -#   </script>
+    -#   <script src="lib/angular-ui-ieshiv.js"></script>
+    -# <![endif]-->
+
     /it is recommended to cherry pick which bower components you want
     = stylesheet_link_tag("./bower_components/bootstrap/dist/css/bootstrap.min.css")
     = stylesheet_link_tag("./bower_components/font-awesome/css/font-awesome.min.css")
-    = stylesheet_link_tag(*Dir.glob("./dev/[^bower_components]**/*.css"))
+    = stylesheet_link_tag(*Dir.glob(".tmp/app/**/*.css"))
+    = stylesheet_link_tag(*Dir.glob(".tmp/components/**/*.css"))
 
   %body
-    /[if lt IE 9] <a href='lthttp://browsehappy.com/'> You are using an out of date browser; this is very dangerous. I strongly urge you to update today.</a>
+    /[f lt IE 9] <a href='lthttp://browsehappy.com/'> You are using an out of date browser; this is very dangerous. I strongly urge you to update today.</a>
 
     %ui-view
 
     /it is recommended to cherry pick which bower components you want
     = javascript_include_tag("./bower_components/angular/angular.js")
     = javascript_include_tag("./bower_components/angular-ui-router/release/angular-ui-router.js")
+
     = javascript_include_tag(*Dir.glob(".tmp/**/*.module.js"))
     = javascript_include_tag(*Dir.glob(".tmp/**/*.routes.js"))
     = javascript_include_tag(*Dir.glob(".tmp/**/*.controller.js"))

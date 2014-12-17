@@ -9,10 +9,12 @@ module Rugular
     Rugular::AppChecker.check_rugular!(self.name, new.destination_root)
 
     def bundle
+      puts 'Installing Ruby gems'
       system('bundle install')
     end
 
     def bower
+      puts 'Installing bower packages'
       system('bower install')
     end
 
