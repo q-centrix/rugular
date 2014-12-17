@@ -9,11 +9,10 @@ describe 'AppController', ->
 
     controller = $controller('AppController')
 
-  describe 'App controller', ->
-    it 'should be created successfully', ->
-      expect(controller).to.be.defined
+  it 'creates', ->
+    expect(controller).to.be.defined
 
-    it 'should have title of App', ->
-      expect(controller.title).to.equal 'App'
+  it 'has title', ->
+    expect(controller.title).to.equal 'App'
 
   specHelper.verifyNoOutstandingHttpRequests()
