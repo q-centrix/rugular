@@ -62,7 +62,11 @@ module Rugular
     def complie_sass_files(folder)
       src_sass_files.each do |file|
         create_file file.to_s.gsub('./src/', './.tmp/').gsub('sass', 'css') do
-          Sass::Engine.new(file.read, load_paths: ["./."]).to_css
+          begin
+            Sass::Engine.new(file.read, load_paths: ["./."]).to_css
+          rescue StandardError => e
+            puts "!!! SASS Error: " + e.message
+          end
         end
       end
     end
