@@ -62,7 +62,7 @@ module Rugular
     def complie_sass_files(folder)
       src_sass_files.each do |file|
         create_file file.to_s.gsub('./src/', './.tmp/').gsub('sass', 'css') do
-          Sass::Engine.new(file.read).to_css
+          Sass::Engine.new(file.read, load_paths: ["./**/*.css"]).to_css
         end
       end
     end
