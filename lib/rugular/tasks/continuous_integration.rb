@@ -10,9 +10,9 @@ module Rugular
     def compile_to_tmp_folder(folder: Pathname.new(".tmp"))
       compile_coffescript_files(folder)
 
-      compile_haml_files(folder)
-
       complie_sass_files(folder)
+
+      compile_haml_files(folder)
     end
 
     def run_karma_script
@@ -76,7 +76,7 @@ module Rugular
     end
 
     def src_sass_files
-      Dir.glob("./src/**/*.sass").map(&transform_to_pathname)
+      Dir.glob("./src/**/[^_]*.sass").map(&transform_to_pathname)
     end
 
     def transform_to_pathname
