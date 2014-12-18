@@ -76,7 +76,7 @@ module Rugular
     end
 
     def src_sass_files
-      Dir.glob("./src/**/[^_]*.sass").map(&transform_to_pathname)
+      Dir.glob("./src/**/*.sass").map(&transform_to_pathname)
     end
 
     def transform_to_pathname
