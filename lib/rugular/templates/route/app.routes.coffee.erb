@@ -1,6 +1,4 @@
-<%= name %>Routing = ($stateProvider, $urlRouterProvider) ->
-  $urlRouterProvider.otherwise('/')
-
+<%= name %>Routing = ($stateProvider) ->
   $stateProvider.state '<%= name %>',
     url: '/<%= name %>'
     templateUrl: '/app/<%= name %>/<%= name %>.html'
@@ -9,7 +7,7 @@
 
   return
 
-<%= name %>Routing.$inject = ['$stateProvider', '$urlRouterProvider']
+<%= name %>Routing.$inject = ['$stateProvider']
 
 angular.module('<%= name %>').config(<%= name %>Routing)
 
