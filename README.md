@@ -6,8 +6,8 @@ Rugular is a ruby scaffolding framework to build AngularJS apps. It builds a
 minified and compressed version of a front-end into the ``./dist`` folder that
 can be served as a standalone AngularJS app. The goal of this framework is to
 create applications written with [best AngularJS
-practices](https://github.com/johnpapa/angularjs-styleguide); CoffeeScript
-optional.
+practices](https://github.com/johnpapa/angularjs-styleguide) using
+CoffeeScript, Haml and Sass.
 
 ## Installation
 
@@ -99,6 +99,13 @@ contain a controller and service namespaced with a new module of the route
 name if one dos not already exist. It will also register the new module in the
 ``app.module.js`` file.
 
+Routes can be nested in another folder representing a module. For example, to
+nest a route inside a pre-existing 'test' module, execute:
+
+```bash
+rugular generate route test:<route_name>
+```
+
 #### Create a Directive
 
 ```bash
@@ -108,6 +115,13 @@ rugular generate directive <directive_name>
 This command will create a directive and controller namespaced with a new
 module of the feature name if one does not already exist. It will also register
 the new module in the ``app.module.js`` file.
+
+Directives can be nested in another folder representing a module like routes.
+For example, to nest a directive inside a pre-existing 'test' module, execute:
+
+```bash
+rugular generate directive test:<directive_name>
+```
 
 #### Create a Factory (TODO)
 
@@ -124,7 +138,6 @@ module in the ``app.module.js`` file.
 A component refers to shareable, abstracted angular modules. To create a
 component, simply run any generator command with the ``-c`` option and the
 service will be created in the ``src/components`` folder.
-
 
 ## Running the Test Suite
 
