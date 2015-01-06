@@ -1,4 +1,5 @@
 require 'ostruct'
+require 'active_support'
 
 module Rugular
   class GeneratorBase < Thor::Group
@@ -6,7 +7,6 @@ module Rugular
 
     argument :name, desc: 'Name for your route'
 
-    # specify a component
     class_option(
       :c,
       type: :boolean,
@@ -31,38 +31,50 @@ module Rugular
       end
     end
 
-    def inject_module_into_app_module
-      insert_into_file(
-        app_module_file,
-        module_declaration,
-        after: "angular.module 'app', [\n"
-      ) unless module_declaration_present?
+    def inject_module_into_module
+      if nested?
+        insert_into_file(
+          nested_module_file,
+          module_declaration,
+          after: "angular.module '#{nested_module_name}', [\n"
+        ) unless module_declaration_present?(nested_module_file)
+      else
+        insert_into_file(
+          app_module_file,
+          module_declaration,
+          after: "angular.module 'app', [\n"
+        ) unless module_declaration_present?(app_module_file)
+      end
     end
 
     def template_files; []; end
 
     protected
 
-    def folder
-      options[:c] ? "src/components/#{name}" : "src/app/#{name}"
+    def lib_directory
+      __dir__.chomp('tasks/generate')
     end
 
     def route_pathnames
-      Dir.glob(template_files).map do |file_name|
-        Pathname.new(file_name)
+      Dir.glob(template_files).map do |filename|
+        Pathname.new(filename)
       end
     end
 
+    def folder
+      options[:c] ? "src/components/#{name_folder}" : "src/app/#{name_folder}"
+    end
+
     def destination_file(pathname)
-      "#{folder}/#{pathname.basename('.erb').to_s.gsub('app', name)}"
+      "#{folder}/#{pathname.basename('.erb').to_s.gsub('app', name.split(':').last)}"
+    end
+
+    def camelcase_name
+      name.split(':').last.camelcase(:lower)
     end
 
     def open_struct
-      @_open_struct ||= OpenStruct.new(name: name)
-    end
-
-    def lib_directory
-      __dir__.chomp('/tasks/generate')
+      @_open_struct ||= OpenStruct.new(name: camelcase_name)
     end
 
     def app_module_file
@@ -70,12 +82,28 @@ module Rugular
     end
 
     def module_declaration
-      "  '#{name}'\n"
+      "  '#{camelcase_name}'\n"
     end
 
-    def module_declaration_present?
-      File.read(app_module_file).include? module_declaration
+    def module_declaration_present?(module_file)
+      File.read(module_file).include? module_declaration
     end
 
+    def nested?
+      name.split(':').length > 1
+    end
+
+    def name_folder
+      name.split(':').join('/')
+    end
+
+    def nested_module_name
+      name.split(':')[-2]
+    end
+
+    def nested_module_file
+      "src/app/#{name.split(':')[0..-2].join('/')}/"\
+        "#{nested_module_name}.module.coffee"
+    end
   end
 end
