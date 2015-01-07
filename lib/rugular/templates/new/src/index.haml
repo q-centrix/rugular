@@ -14,8 +14,8 @@
     /it is recommended to cherry pick which bower components you want
     = stylesheet_link_tag("./bower_components/bootstrap/dist/css/bootstrap.min.css")
     = stylesheet_link_tag("./bower_components/font-awesome/css/font-awesome.min.css")
-    = stylesheet_link_tag(*Dir.glob(".tmp/app/**/*.css"))
-    = stylesheet_link_tag(*Dir.glob(".tmp/components/**/*.css"))
+    /import all of your css, both the app and components css into the application.css
+    = stylesheet_link_tag(*Dir.glob(".tmp/application.css"))
 
   %body
     /[f lt IE 9] <a href='lthttp://browsehappy.com/'> You are using an out of date browser; this is very dangerous. I strongly urge you to update today.</a>

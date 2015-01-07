@@ -1,5 +1,65 @@
-# Only watch the src folder
-directories %w(src)
+module ::Guard
+  class RugularHaml < Guard
+    def start
+      Haml::Exec::Haml.new
+    end
+
+    def stop; true end
+    def reload; true end
+    def run_all; true end
+
+    def run_on_changes(paths)
+
+    end
+
+    def run_on_removals(paths)
+
+    end
+  end
+end
+
+guard 'rugular_haml' do
+  watch %r{^src/.+\.haml}
+end
+
+module ::Guard
+  class RugularCoffeeScript < Guard
+    def start; true end
+    def stop; true end
+    def reload; true end
+    def run_all
+      CoffeeScript.compile
+
+    end
+
+    def run_on_change
+    end
+  end
+end
+
+guard 'rugular_coffee_script' do
+  watch %r{^src/.+\.coffee}
+end
+
+
+module ::Guard
+  class RugularSass < Guard
+    def start; true end
+    def stop; true end
+    def reload; true end
+    def run_all
+
+    end
+
+    def run_on_change
+
+    end
+  end
+end
+
+guard 'rugular_sass' do
+  watch %r{^src/.+\.sass}
+end
 
 # Create .tmp folder for localhost server and karma
 ['haml', 'sass'].each do |language|
@@ -8,15 +68,15 @@ directories %w(src)
   end
 end
 
-
-input_dir = 'src'
-
 coffeescript_options = {
-  input: input_dir,
+  input: 'src',
   output: '.tmp',
-  patterns: [%r{^#{input_dir}/(.+\.(?:coffee|coffee\.md|litcoffee))$}]
+  patterns: [%r{^src/.+\.coffee}]
 }
 
-guard 'coffeescript', coffeescript_options do
-  coffeescript_options[:patterns].each { |pattern| watch(pattern) }
-end
+guard 'coffeescript'
+
+# # Allow sprockets for sass
+# guard :sprockets, destination: 'dist', asset_paths: 'src', css_minify: true, do
+#   watch %r{^src/.+\.sass}
+# end
