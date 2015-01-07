@@ -102,8 +102,12 @@ module Rugular
     end
 
     def nested_module_file
-      "src/app/#{name.split(':')[0..-2].join('/')}/"\
+      "src/#{app_or_component}/#{name.split(':')[0..-2].join('/')}/"\
         "#{nested_module_name}.module.coffee"
+    end
+
+    def app_or_component
+      options[:c] ? 'app' : 'components'
     end
   end
 end
