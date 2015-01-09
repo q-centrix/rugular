@@ -1,27 +1,16 @@
 !!!
-%html{"ng-app" => "app"}
+%html{'ng-app' => 'app'}
   %head
     %title Hello
 
-    -# add a list of bower css files you wish to include in this method they
-    -# will be prepended to your application's css to the application.css file
-    = bower_css_files("bower_components/bootstrap/dist/css/bootstrap.min.css",
-      "font-awesome/css/font-awesome.min.css")
+    -# add a list of bower css and javascript files you wish to include in the
+    -# bower_components.yml file
 
-    -# This is a manifest application.css file created with your sass
-    %link(href="application.css", media="screen", rel="stylesheet")
+    %link(href='application.css', media='screen', rel='stylesheet')
 
   %body
     /[f lt IE 9] <a href='http://browsehappy.com/'> You are using an out of date browser; this is very dangerous. I strongly urge you to update today.</a>
 
     %ui-view
 
-    -# add a list of bower js files you wish to include in this method they
-    -# will be prepended to your application's js to the application.js file
-    = bower_javascript_files('angular/angular.js',
-      'angular-ui-router/release/angular-ui-router.js')
-
-    -# This is a manifest application.js file created with your javascript
-    -# in this order: module files, routes, factories, controllers and
-    -# directives.
-    %script(src="application.js")
+    %script(src='application.js')

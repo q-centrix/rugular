@@ -1,0 +1,6 @@
+css:
+  - 'font-awesome/css/font-awesome.min.css'
+js:
+  - 'angular/angular.js'
+  - 'angular-ui-router/release/angular-ui-router.js'
+

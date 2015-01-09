@@ -7,14 +7,6 @@ module Rugular
 
     desc('runs the tests once for continuous integration')
 
-    def compile_to_tmp_folder(folder: Pathname.new(".tmp"))
-      compile_coffescript_files(folder)
-
-      complie_sass_files(folder)
-
-      compile_haml_files(folder)
-    end
-
     def run_karma_script
       system(
         "./node_modules/karma/bin/karma start "\
@@ -40,52 +32,5 @@ module Rugular
     #
     #   return false unless $?.exitstatus == 0
     # end
-
-    private
-
-    def compile_coffescript_files(folder)
-      src_coffeescript_files.each do |file|
-        create_file file.to_s.gsub('./src/', './.tmp/').gsub('coffee', 'js') do
-          CoffeeScript.compile(file)
-        end
-      end
-    end
-
-    def compile_haml_files(folder)
-      src_haml_files.each do |file|
-        create_file file.to_s.gsub('./src/', './.tmp/').gsub('haml', 'html') do
-          HamlRenderer.render(file)
-        end
-      end
-    end
-
-    def complie_sass_files(folder)
-      src_sass_files.each do |file|
-        create_file file.to_s.gsub('./src/', './.tmp/').gsub('sass', 'css') do
-          begin
-            Sass::Engine.new(file.read, load_paths: ["./."]).to_css
-          rescue StandardError => e
-            puts "!!! SASS Error: " + e.message
-          end
-        end
-      end
-    end
-
-    def src_coffeescript_files
-      Dir.glob("./src/**/*.coffee").map(&transform_to_pathname)
-    end
-
-    def src_haml_files
-      Dir.glob("./src/**/*.haml").map(&transform_to_pathname)
-    end
-
-    def src_sass_files
-      Dir.glob("./src/**/*.sass").map(&transform_to_pathname)
-    end
-
-    def transform_to_pathname
-      ->(file_name) { Pathname.new(file_name) }
-    end
-
   end
 end
