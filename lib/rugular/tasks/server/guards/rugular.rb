@@ -1,24 +1,14 @@
 require 'guard/compat/plugin'
-require 'action_view'
 require 'haml'
+require 'sass'
+require 'coffee_script'
+require 'pry'
 
 module Guard
-  class RugularHaml < Plugin
-    include ActionView::Helpers::AssetTagHelper
+  class Rugular < Plugin
 
     def initialize(opts = {})
-      opts = {
-        notifications:        true,
-        default_ext:          'html',
-        port:                 3111,
-        auto_append_file_ext: false
-      }.merge(opts)
-
       super(opts)
-
-      if options[:input]
-        watchers << ::Guard::Watcher.new(%r{^#{options[:input]}/([\w\-_]+(\.html)?\.haml)$})
-      end
     end
 
     def start
@@ -32,25 +22,57 @@ module Guard
 
     def run_on_changes(paths)
       paths.each do |file|
-        output_paths = _output_paths(file)
-        compiled_haml = compile_haml(file)
-
-        output_paths.each do |output_file|
-          FileUtils.mkdir_p File.dirname(output_file)
-          File.open(output_file, 'w') { |f| f.write(compiled_haml) }
+        case file.split('.').last
+        when 'haml'   then message = compile_haml(file)
+        when 'coffee' then message = compile_coffee(coffee)
+        when 'sass'   then message = compile_sass(sass)
         end
-
-        message = "Successfully compiled haml to html!\n"
-        message += "# #{file} -> #{output_paths.join(', ')}".gsub("#{::Bundler.root.to_s}/", '')
         ::Guard::UI.info message
       end
     end
 
     def run_on_removals(paths)
-
+      run_on_changes(paths)
     end
 
     private
+
+    def compile_haml
+      File.open('dist/index.html', 'w') do |file|
+        engine = ::Haml::Engine.new(content, {})
+        file.write = engine.render(get_binding)
+      end
+    rescue StandardError => error
+      message = "HAML compilation of #{file} failed!\nError: #{error.message}"
+      ::Guard::UI.error message
+      Notifier.notify(false, message) if options[:notifications]
+      throw :task_has_failed
+    end
+
+    def compile_coffee
+    end
+
+    # output_paths = _output_paths(file)
+    # compiled_haml = compile_haml(file)
+    #
+    # output_paths.each do |output_file|
+    #   FileUtils.mkdir_p File.dirname(output_file)
+    #   File.open(output_file, 'w') { |f| f.write(compiled_haml) }
+    # end
+    #
+    # File.open("dist/application.css", 'w') do |file|
+    #   Dir.glob("src/**/*.sass").sort.map { |e| File.read(e) }.each do |sass|
+    #     Sass::Engine.new(sass, syntax: :sass).render
+    #   end
+    #   file.write(
+    #     Sass::Engine.new(
+    #       Dir.glob("src/**/*.sass").sort.map { |e| File.read(e) }.join,
+    #       syntax: :sass
+    #     ).render
+    #   )
+    # end
+    # message = "Successfully compiled haml to html!\n"
+    # message += "# #{file} -> #{output_paths.join(', ')}".gsub("#{::Bundler.root.to_s}/", '')
 
     def compile_haml(file)
       begin
@@ -125,6 +147,7 @@ module Guard
     end
 
     def get_binding
+      binding.pry
       @_binding ||= binding
     end
 
@@ -151,9 +174,9 @@ module Guard
     def javascript_include_tag(*sources)
       options = sources.extract_options!.stringify_keys
       path_options = options.extract!('protocol', 'extname').symbolize_keys
-      copy_bower_files(
-        sources.select { |source| source.match('bower_component') }
-      )
+      # copy_bower_files(
+      #   sources.select { |source| source.match('bower_component') }
+      # )
 
       sources.uniq.map { |source|
         tag_options = {
@@ -161,14 +184,31 @@ module Guard
         }.merge!(options)
         content_tag(:script, "", tag_options)
       }.join("\n").html_safe
+    end
+    # bower_components.each do |bower_component|
+    #   FileUtils.mkdir_p(File.dirname(bower_component.gsub('bow', '.tmp/bow')))
+    #   FileUtils.cp_r(bower_component, bower_component.gsub('bow', '.tmp/bow'))
+    # end
 
+    def bower_components(*components)
+      # File.open("dist/application.css", 'w') do |file|
+      #   file.write
+      #
+      #   file.write(
+      #     Sass::Engine.new(
+      #       Dir.glob("src/**/*.sass").map { |e| File.read(e) }.join,
+      #       syntax: :sass
+      #     ).render
+      #   )
+      # end
     end
 
-    def copy_bower_files(bower_components)
-      bower_components.each do |bower_component|
-        FileUtils.mkdir_p(File.dirname(bower_component.gsub('bow', '.tmp/bow')))
-        FileUtils.cp_r(bower_component, bower_component.gsub('bow', '.tmp/bow'))
-      end
+    def application_javascript
+      Dir.glob(".tmp/**/*.module.js")
+      Dir.glob(".tmp/**/*.routes.js")
+      Dir.glob(".tmp/**/*.factory.js")
+      Dir.glob(".tmp/**/*.controller.js")
+      Dir.glob(".tmp/**/*.directive.js")
     end
 
   end

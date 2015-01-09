@@ -1,13 +1,5 @@
-Dir.glob("#{__dir__}/guards/*.rb").each { |file| require file }
-guard :rugular_haml, port: 3111 do
-  watch %r{^src/.+\.haml}
-end
+require "#{__dir__}/guards/rugular.rb"
 
-# guard 'rugular_coffee_script' do
-#   watch %r{^src/.+\.coffee}
-# end
-#
-# guard 'rugular_sass' do
-#   watch %r{^src/.+\.sass}
-# end
-#
+guard :rugular do
+  watch %r{^src/.+}
+end

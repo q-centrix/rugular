@@ -3,31 +3,25 @@
   %head
     %title Hello
 
-    -# <!--[if lte IE 8]>
-    -#   <script type="text/javascript">
-    -#     // define our custom directives here
-    -#     window.myCustomTags = ['myDirective'];
-    -#   </script>
-    -#   <script src="lib/angular-ui-ieshiv.js"></script>
-    -# <![endif]-->
+    -# add a list of bower css files you wish to include in this method they
+    -# will be prepended to your application's css to the application.css file
+    = bower_css_files("bower_components/bootstrap/dist/css/bootstrap.min.css",
+      "font-awesome/css/font-awesome.min.css")
 
-    /it is recommended to cherry pick which bower components you want
-    = stylesheet_link_tag("./bower_components/bootstrap/dist/css/bootstrap.min.css")
-    = stylesheet_link_tag("./bower_components/font-awesome/css/font-awesome.min.css")
-    /import all of your css, both the app and components css into the application.css
-    = stylesheet_link_tag(*Dir.glob(".tmp/application.css"))
+    -# This is a manifest application.css file created with your sass
+    %link(href="application.css", media="screen", rel="stylesheet")
 
   %body
-    /[f lt IE 9] <a href='lthttp://browsehappy.com/'> You are using an out of date browser; this is very dangerous. I strongly urge you to update today.</a>
+    /[f lt IE 9] <a href='http://browsehappy.com/'> You are using an out of date browser; this is very dangerous. I strongly urge you to update today.</a>
 
     %ui-view
 
-    /it is recommended to cherry pick which bower components you want
-    = javascript_include_tag("./bower_components/angular/angular.js")
-    = javascript_include_tag("./bower_components/angular-ui-router/release/angular-ui-router.js")
+    -# add a list of bower js files you wish to include in this method they
+    -# will be prepended to your application's js to the application.js file
+    = bower_javascript_files('angular/angular.js',
+      'angular-ui-router/release/angular-ui-router.js')
 
-    = javascript_include_tag(*Dir.glob(".tmp/**/*.module.js"))
-    = javascript_include_tag(*Dir.glob(".tmp/**/*.routes.js"))
-    = javascript_include_tag(*Dir.glob(".tmp/**/*.factory.js"))
-    = javascript_include_tag(*Dir.glob(".tmp/**/*.controller.js"))
-    = javascript_include_tag(*Dir.glob(".tmp/**/*.directive.js"))
+    -# This is a manifest application.js file created with your javascript
+    -# in this order: module files, routes, factories, controllers and
+    -# directives.
+    %script(src="application.js")
