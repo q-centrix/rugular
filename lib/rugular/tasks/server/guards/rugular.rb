@@ -16,16 +16,20 @@ module Guard
     def reload; true end
 
     def run_all
-      run_on_changes(Dir.glob('**/*'))
+      run_on_changes('src/app/app.coffee')
     end
 
     def run_on_changes(paths)
       paths.each do |file|
+        ::Guard::UI.info "Guard received save event for #{file}"
+
         case file.split('.').last
         when 'haml'   then message = compile_haml(file)
         when 'coffee' then message = compile_coffee(file)
         when 'sass'   then message = compile_sass(file)
+        when 'yaml'   then message = compile_yaml
         end
+
         ::Guard::UI.info message
       end
     end
@@ -37,18 +41,12 @@ module Guard
     private
 
     def compile_haml(file)
-      html = ::Haml::Engine.new(File.read(file), {}).render
-
-      if file == 'index.html'
+      if file == 'src/index.html'
         File.open('dist/index.html', 'w') do |file|
-          file.write = html
+          file.write = ::Haml::Engine.new(File.read(file), {}).render
         end
       else
-        compile_coffee('app/app.coffee')
-
-        IO.write('dist/application.js', File.open('dist/application.js') do |f|
-          f.read.gsub(%r{#{file}}, html).gsub('templateURL', 'template')
-        end)
+        compile_coffee('src/app/app.module.coffee')
       end
 
       message = "Successfully compiled #{file} to html!\n"
@@ -62,13 +60,21 @@ module Guard
       File.open('dist/application.js', 'w') do |file|
         file.write(
           Uglifier.compile(
-            bower_javascript +
             CoffeeScript.compile(
-              javascript_files.map { |e| File.read(e) }.join
-            ),
+              javascript_files.map { |e| File.read(e) }.join,
+            ).gsub('templateUrl', 'template'),
             comments: false
           )
         )
+      end
+
+      # Inline templates into javascript
+      (Dir.glob("**/*.haml") - ["src/index.haml"]).each do |haml_file|
+        html = ::Haml::Engine.new(File.read(haml_file), {}).render
+        haml_file.gsub!('src/', '').gsub!('haml', 'html')
+        IO.write('dist/application.js', File.open('dist/application.js') do |f|
+          f.read.gsub(%r{#{haml_file}}, html)
+        end)
       end
 
       message = "Successfully compiled #{file} to js!\n"
@@ -81,7 +87,6 @@ module Guard
 
       File.open("dist/application.css", 'w') do |file|
         file.write(
-          bower_css +
           Sass::Engine.new(
             Dir.glob("**/*.sass").sort.map { |e| File.read(e) }.join,
             syntax: :sass,
@@ -92,6 +97,19 @@ module Guard
       end
 
       message = "Successfully compiled #{file} to css!\n"
+    rescue StandardError => error
+      handle_error_in_guard(error)
+    end
+
+    def compile_yaml
+      File.open("dist/bower_components.css", 'w') do |file|
+        file.write bower_css
+      end
+      File.open("dist/bower_components.js", 'w') do |file|
+        file.write Uglifier.compile(bower_javascript)
+      end
+
+      message = 'Successfully created bower_component dist files'
     rescue StandardError => error
       handle_error_in_guard(error)
     end
@@ -109,7 +127,7 @@ module Guard
     end
 
     def bower_yaml
-      YAML.load(File.read('src/bower_components.yml'))
+      YAML.load(File.read('src/bower_components.yaml'))
     end
 
     def handle_error_in_guard(error)
