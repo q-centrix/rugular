@@ -41,9 +41,11 @@ module Guard
     private
 
     def compile_haml(file)
+      html = ::Haml::Engine.new(File.read(file)).render
+
       if file == 'src/index.html'
         File.open('dist/index.html', 'w') do |file|
-          file.write = ::Haml::Engine.new(File.read(file), {}).render
+          file.write = html
         end
       else
         compile_coffee('src/app/app.module.coffee')
@@ -73,7 +75,7 @@ module Guard
         html = ::Haml::Engine.new(File.read(haml_file), {}).render
         haml_file.gsub!('src/', '').gsub!('haml', 'html')
         IO.write('dist/application.js', File.open('dist/application.js') do |f|
-          f.read.gsub(%r{#{haml_file}}, html)
+          f.read.gsub(haml_file, html)
         end)
       end
 
@@ -83,22 +85,31 @@ module Guard
     end
 
     def compile_sass(file)
-      Sass::Engine.new(File.read(file)).to_css
+      sass_engine.for_file(File.read(file)).to_css
 
       File.open("dist/application.css", 'w') do |file|
         file.write(
-          Sass::Engine.new(
-            Dir.glob("**/*.sass").sort.map { |e| File.read(e) }.join,
-            syntax: :sass,
-            debug_info: true,
-            template_location: 'src'
-          ).render
+          Dir.glob("**/*").reject(&partial_sass_files).map(&read_file).map do |file|
+            Sass::Engine.for_file(
+              file,
+              syntax: :sass,
+              template_location: 'src'
+            )
+          end.join
         )
       end
 
       message = "Successfully compiled #{file} to css!\n"
     rescue StandardError => error
       handle_error_in_guard(error)
+    end
+
+    def partial_sass_files
+      lambda { |filename| filename =~ /^_/ }
+    end
+
+    def read_file
+      lambda { |filename| File.read(filename) }
     end
 
     def compile_yaml
@@ -148,6 +159,10 @@ module Guard
       lambda do |x, y|
         x.scan('/').length <=> y.scan('/').length
       end
+    end
+
+    def sass_engine
+      @_sass_engine ||= Sass::Engine
     end
 
   end
