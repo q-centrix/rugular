@@ -1,4 +1,8 @@
-['guard/compat/plugin', 'haml', 'sass', 'coffee_script'].each { |f| require f }
+require 'guard/compat/plugin'
+require 'haml'
+require 'sass'
+require 'coffee_script'
+require 'uglifier'
 
 module Guard
   class Rugular < Plugin
@@ -57,9 +61,12 @@ module Guard
 
       File.open('dist/application.js', 'w') do |file|
         file.write(
-          bower_javascript +
-          CoffeeScript.compile(
-            javascript_files.map { |e| File.read(e) }.join
+          Uglifier.compile(
+            bower_javascript +
+            CoffeeScript.compile(
+              javascript_files.map { |e| File.read(e) }.join
+            ),
+            comments: false
           )
         )
       end
@@ -113,10 +120,10 @@ module Guard
 
     def javascript_files
       Dir.glob("**/*.module.coffee").sort(&reverse_nested) +
-      Dir.glob("**/*.routes.coffee").sort(&reverse_nested) +
-      Dir.glob("**/*.factory.coffee").sort(&reverse_nested) +
-      Dir.glob("**/*.controller.coffee").sort(&reverse_nested) +
-      Dir.glob("**/*.directive.coffee").sort(&reverse_nested)
+        Dir.glob("**/*.routes.coffee").sort(&reverse_nested) +
+        Dir.glob("**/*.factory.coffee").sort(&reverse_nested) +
+        Dir.glob("**/*.controller.coffee").sort(&reverse_nested) +
+        Dir.glob("**/*.directive.coffee").sort(&reverse_nested)
     end
 
     def reverse_nested

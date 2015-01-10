@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'coffee-script', '~> 2'
   spec.add_runtime_dependency 'haml',          '~> 4'
   spec.add_runtime_dependency 'sass',          '~> 3'
+  spec.add_runtime_dependency 'uglifier',      '~> 2'
   spec.add_runtime_dependency 'foreman',       '~> 0'
   spec.add_runtime_dependency 'thor',          '~> 0'
 
