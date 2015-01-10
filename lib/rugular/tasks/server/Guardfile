@@ -2,5 +2,5 @@ require "#{__dir__}/guards/rugular.rb"
 directories %w(src)
 
 guard :rugular do
-  watch /.+/
+  watch /^.+.[^sass]/
 end

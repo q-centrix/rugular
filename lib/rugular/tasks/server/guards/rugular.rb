@@ -1,6 +1,5 @@
 require 'guard/compat/plugin'
 require 'haml'
-require 'sass'
 require 'coffee_script'
 require 'uglifier'
 
@@ -26,7 +25,6 @@ module Guard
         case file.split('.').last
         when 'haml'   then message = compile_haml(file)
         when 'coffee' then message = compile_coffee(file)
-        when 'sass'   then message = compile_sass(file)
         when 'yaml'   then message = compile_yaml
         end
 
@@ -82,34 +80,6 @@ module Guard
       message = "Successfully compiled #{file} to js!\n"
     rescue StandardError => error
       handle_error_in_guard(error)
-    end
-
-    def compile_sass(file)
-      sass_engine.for_file(File.read(file)).to_css
-
-      File.open("dist/application.css", 'w') do |file|
-        file.write(
-          Dir.glob("**/*").reject(&partial_sass_files).map(&read_file).map do |file|
-            Sass::Engine.for_file(
-              file,
-              syntax: :sass,
-              template_location: 'src'
-            )
-          end.join
-        )
-      end
-
-      message = "Successfully compiled #{file} to css!\n"
-    rescue StandardError => error
-      handle_error_in_guard(error)
-    end
-
-    def partial_sass_files
-      lambda { |filename| filename =~ /^_/ }
-    end
-
-    def read_file
-      lambda { |filename| File.read(filename) }
     end
 
     def compile_yaml
