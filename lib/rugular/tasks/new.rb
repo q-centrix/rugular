@@ -1,7 +1,5 @@
 require 'ostruct'
 require 'pathname'
-require 'bourbon'
-require 'neat'
 
 module Rugular
   class New < Thor::Group
