@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/currica/rugular.svg)](https://travis-ci.org/currica/rugular)
+![Build
+Status](https://circleci.com/gh/currica/rugular.svg?style=shield&circle-token=:circle-token)
 
 # Rugular
 
