@@ -41,6 +41,7 @@ Structure](https://docs.google.com/document/d/1XXMvReO8-Awi1EZXAXS4PzDzdNvV6pGcu
 ├──  Gemfile
 ├──  package.json
 ├──  src/
+│   ├──  application.sass (manifest file)
 │   ├──  app/
 │   │   ├──  app.module.coffee
 │   │   ├──  app.config.coffee
@@ -48,7 +49,6 @@ Structure](https://docs.google.com/document/d/1XXMvReO8-Awi1EZXAXS4PzDzdNvV6pGcu
 │   │   ├──  app.controller.spec.coffee
 │   │   ├──  app.routes.coffee
 │   │   ├──  index.haml
-│   │   ├──  index.sass
 │   ├──  components/
 │   ├──  404.html
 │   ├──  500.html

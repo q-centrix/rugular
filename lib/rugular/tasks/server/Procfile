@@ -1,6 +1,5 @@
-web: ruby -run -e httpd dist --port 8080 &> /dev/null
+web: http-server dist
 guard: bundle exec guard --guardfile=$(bundle show rugular)/lib/rugular/tasks/server/Guardfile
-sass: sass --watch src/application.css:dist/application.css
-selenium: webdriver-manager start &> /dev/null
+sass: sass --watch --load-path src src/application.sass:dist/application.css
 karma: ./node_modules/karma/bin/karma start karma.conf
 
