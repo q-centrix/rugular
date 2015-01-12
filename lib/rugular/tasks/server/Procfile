@@ -1,5 +1,6 @@
-web: ruby -run -e httpd .tmp --port 8080 &> /dev/null
-selenium: webdriver-manager start &> /dev/null
+web: ruby -run -e httpd dist --port 8080 &> /dev/null
 guard: bundle exec guard --guardfile=$(bundle show rugular)/lib/rugular/tasks/server/Guardfile
+sass: sass --watch src/application.css:dist/application.css
+selenium: webdriver-manager start &> /dev/null
 karma: ./node_modules/karma/bin/karma start karma.conf
 

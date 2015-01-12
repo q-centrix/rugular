@@ -29,13 +29,15 @@ module Rugular
     end
 
     def create_component_directory
-      empty_directory "#{app_name}/components"
+      empty_directory "#{app_name}/src/components"
     end
 
     def installation_complete
       puts "Thank you for installing Rugular, please finish setting up your "\
         "project with: `cd #{app_open_struct.name} && bundle install && "\
-        "rugular dependencies`"
+        "rugular dependencies`\n"\
+        "Please install bourbon and neat by bundle exec bourbon install "\
+        "--path src/ and neat with bundle exec neat install --path src/"
     end
 
     private

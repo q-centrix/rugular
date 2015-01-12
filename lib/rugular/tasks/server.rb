@@ -12,12 +12,10 @@ module Rugular
       "(set in lib/rugular/tasks/server/Procfile)"
     )
 
-    argument :port, type: :numeric, desc: 'port number to find the server'
-
     def start_server
       system(
         "bundle exec foreman start --color --root=#{destination_root} " \
-        "--procfile=#{rugular_procfile} --port #{port}"
+        "--procfile=#{rugular_procfile}"
       )
     end
 

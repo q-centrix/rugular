@@ -17,14 +17,17 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency 'actionview', '~> 4'
-  spec.add_runtime_dependency 'sprockets',  '~> 2'
-  spec.add_runtime_dependency 'guard',      '~> 2'
-  spec.add_runtime_dependency 'coffee-script'#,       '~> 4'
-  spec.add_runtime_dependency 'haml',       '~> 4'
-  spec.add_runtime_dependency 'sass',       '~> 3'
-  spec.add_runtime_dependency 'foreman',    '~> 0'
-  spec.add_runtime_dependency 'thor',       '~> 0'
+  spec.add_runtime_dependency 'actionview',    '~> 4'
+  spec.add_runtime_dependency 'guard',         '~> 2'
+  spec.add_runtime_dependency 'guard-compat',  '~> 1'
+  spec.add_runtime_dependency 'coffee-script', '~> 2'
+  spec.add_runtime_dependency 'haml',          '~> 4'
+  spec.add_runtime_dependency 'sass',          '~> 3'
+  spec.add_runtime_dependency 'uglifier',      '~> 2'
+  spec.add_runtime_dependency 'foreman',       '~> 0'
+  spec.add_runtime_dependency 'thor',          '~> 0'
+  spec.add_runtime_dependency 'bourbon',       '~> 4'
+  spec.add_runtime_dependency 'neat',          '~> 1'
 
   spec.add_development_dependency 'aruba',  '~> 0'
   spec.add_development_dependency 'byebug', '~> 3'

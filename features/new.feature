@@ -6,7 +6,7 @@ Feature: Rugular CLI
   Scenario: New
     When I run `rugular new my-app`
     Then the exit status should be 0
-    Then the file "my-app/.gitignore" should contain:
+    And the file "my-app/.gitignore" should contain:
       """
       bower_components
       """
@@ -24,6 +24,9 @@ Feature: Rugular CLI
       """
     And the file "my-app/src/index.haml" should contain:
       """
-      = javascript_include_tag("./bower_components/angular-ui-router/release/angular-ui-router.js")
+      %link(href='application.css', media='screen', rel='stylesheet')
       """
+    And a directory named "my-app/src/components" should exist
+    And a file named "my-app/src/application.sass" should exist
+    And the output should contain "Thank you for installing Rugular"
 

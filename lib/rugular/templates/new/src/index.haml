@@ -1,33 +1,18 @@
 !!!
-%html{"ng-app" => "app"}
+%html{'ng-app' => 'app'}
   %head
     %title Hello
 
-    -# <!--[if lte IE 8]>
-    -#   <script type="text/javascript">
-    -#     // define our custom directives here
-    -#     window.myCustomTags = ['myDirective'];
-    -#   </script>
-    -#   <script src="lib/angular-ui-ieshiv.js"></script>
-    -# <![endif]-->
+    -# add a list of bower css and javascript files you wish to include in the
+    -# bower_components.yml file
 
-    /it is recommended to cherry pick which bower components you want
-    = stylesheet_link_tag("./bower_components/bootstrap/dist/css/bootstrap.min.css")
-    = stylesheet_link_tag("./bower_components/font-awesome/css/font-awesome.min.css")
-    = stylesheet_link_tag(*Dir.glob(".tmp/app/**/*.css"))
-    = stylesheet_link_tag(*Dir.glob(".tmp/components/**/*.css"))
+    %link(href='bower_components.css', media='screen', rel='stylesheet')
+    %link(href='application.css', media='screen', rel='stylesheet')
 
   %body
-    /[f lt IE 9] <a href='lthttp://browsehappy.com/'> You are using an out of date browser; this is very dangerous. I strongly urge you to update today.</a>
+    /[f lt IE 9] <a href='http://browsehappy.com/'> You are using an out of date browser; this is very dangerous. I strongly urge you to update today.</a>
 
     %ui-view
 
-    /it is recommended to cherry pick which bower components you want
-    = javascript_include_tag("./bower_components/angular/angular.js")
-    = javascript_include_tag("./bower_components/angular-ui-router/release/angular-ui-router.js")
-
-    = javascript_include_tag(*Dir.glob(".tmp/**/*.module.js"))
-    = javascript_include_tag(*Dir.glob(".tmp/**/*.routes.js"))
-    = javascript_include_tag(*Dir.glob(".tmp/**/*.factory.js"))
-    = javascript_include_tag(*Dir.glob(".tmp/**/*.controller.js"))
-    = javascript_include_tag(*Dir.glob(".tmp/**/*.directive.js"))
+    %script(src='bower_components.js')
+    %script(src='application.js')

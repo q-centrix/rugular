@@ -1,22 +1,6 @@
-# Only watch the src folder
+require "#{__dir__}/guards/rugular.rb"
 directories %w(src)
 
-# Create .tmp folder for localhost server and karma
-['haml', 'sass'].each do |language|
-  guard language, input: 'src', output: '.tmp', run_at_start: true do
-    watch %r{^src/.+\.#{language}}
-  end
-end
-
-
-input_dir = 'src'
-
-coffeescript_options = {
-  input: input_dir,
-  output: '.tmp',
-  patterns: [%r{^#{input_dir}/(.+\.(?:coffee|coffee\.md|litcoffee))$}]
-}
-
-guard 'coffeescript', coffeescript_options do
-  coffeescript_options[:patterns].each { |pattern| watch(pattern) }
+guard :rugular do
+  watch /^.+.[^sass]/
 end

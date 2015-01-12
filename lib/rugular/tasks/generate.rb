@@ -1,5 +1,4 @@
-Dir.glob("#{__dir__}/helpers/**/*.rb").each {|file| require file}
-Dir.glob("#{__dir__}/generate/**/*.rb").each {|file| require file}
+Dir.glob("#{__dir__}/{helpers,generate}/**/*.rb").each {|file| require file}
 
 module Rugular
   class Generate < Thor
@@ -18,7 +17,6 @@ module Rugular
       The angular services this command can create include:
 
       * A route (includes a route, controller, controller_spec and view)
-      * A controller
       * A factory
       * A directive (includes a view)
 

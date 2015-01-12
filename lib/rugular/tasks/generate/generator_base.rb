@@ -47,6 +47,13 @@ module Rugular
       end
     end
 
+    def add_sass_declaration
+      append_to_file(
+        'src/application.sass',
+        "@import '#{folder.sub('src/', '')}'"
+      ) unless sass_declaration_present?(folder)
+    end
+
     def template_files; []; end
 
     protected
@@ -89,6 +96,10 @@ module Rugular
       File.read(module_file).include? module_declaration
     end
 
+    def sass_declaration_present?(folder)
+      File.read("src/application.sass").include?  "@import #{folder}"
+    end
+
     def nested?
       name.split(':').length > 1
     end
@@ -102,8 +113,12 @@ module Rugular
     end
 
     def nested_module_file
-      "src/app/#{name.split(':')[0..-2].join('/')}/"\
+      "src/#{app_or_component}/#{name.split(':')[0..-2].join('/')}/"\
         "#{nested_module_name}.module.coffee"
+    end
+
+    def app_or_component
+      options[:c] ? 'components' : 'app'
     end
   end
 end
