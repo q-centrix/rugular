@@ -131,10 +131,6 @@ module Guard
       end
     end
 
-    def sass_engine
-      @_sass_engine ||= Sass::Engine
-    end
-
   end
 end
 
