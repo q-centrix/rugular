@@ -41,9 +41,9 @@ module Guard
     def compile_haml(file)
       html = ::Haml::Engine.new(File.read(file)).render
 
-      if file == 'src/index.html'
+      if file.include? 'src/index.haml'
         File.open('dist/index.html', 'w') do |file|
-          file.write = html
+          file.write html
         end
       else
         compile_coffee('src/app/app.module.coffee')
@@ -59,21 +59,22 @@ module Guard
 
       File.open('dist/application.js', 'w') do |file|
         file.write(
-          Uglifier.compile(
+          # Uglifier.compile(
             CoffeeScript.compile(
               javascript_files.map { |e| File.read(e) }.join,
             ).gsub('templateUrl', 'template'),
-            comments: false
-          )
+          #   comments: false
+          # )
         )
       end
 
       # Inline templates into javascript
       (Dir.glob("**/*.haml") - ["src/index.haml"]).each do |haml_file|
-        html = ::Haml::Engine.new(File.read(haml_file), {}).render
-        haml_file.gsub!('src/', '').gsub!('haml', 'html')
+        haml_html = ::Haml::Engine.new(File.read(haml_file), {}).render
+        html = haml_html.tr("\n", '').gsub('"', '\"')
+        html_filename = haml_file.gsub('src/', '').gsub('haml', 'html')
         IO.write('dist/application.js', File.open('dist/application.js') do |f|
-          f.read.gsub(haml_file, html)
+          f.read.gsub(html_filename, html)
         end)
       end
 
