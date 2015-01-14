@@ -64,6 +64,8 @@ and run a server on ``localhost:8080``. To run the server, type:
 bundle exec rugular server
 ```
 
+You must have [http-server](https://github.com/nodeapps/http-server) installed.
+
 ## Running the tests
 
 ### Unit Tests
@@ -148,16 +150,10 @@ To run the test suite just once (such as in a continuous environment) execute:
 rugular ci
 ```
 
-## TODO (need to build)
-
-### Building the app
+## Building the app
 
 Rugular builds a minified, compressed version of your app in the ``/dist``
-folder. To build the app run:
-
-```
-rugular build
-```
+folder. This is done for you by the ``rugular server`` command.
 
 ## Contributing
 
@@ -168,4 +164,4 @@ rugular build
 5. Create a new Pull Request
 
 ## License
-Copyright 2014. Q-Centrix. MIT License.
+Copyright 2014-2015. Q-Centrix. MIT License.
