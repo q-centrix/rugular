@@ -60,7 +60,7 @@ module Guard
       File.open('dist/application.js', 'w') do |file|
         file.write(
           javascript_files.map do |file|
-            text = File.read(e).gsub('templateUrl', 'template')
+            text = File.read(file).gsub('templateUrl', 'template')
             CoffeeScript.compile(text)
           end.join
         )
