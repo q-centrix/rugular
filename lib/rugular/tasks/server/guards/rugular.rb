@@ -1,7 +1,7 @@
-require 'guard/compat/plugin'
 require 'haml'
 require 'coffee_script'
 require 'uglifier'
+require 'guard'
 
 module Guard
   class Rugular < Plugin
@@ -59,9 +59,10 @@ module Guard
 
       File.open('dist/application.js', 'w') do |file|
         file.write(
-          CoffeeScript.compile(
-            javascript_files.map { |e| File.read(e) }.join,
-          ).gsub('templateUrl', 'template'),
+          javascript_files.map do |file|
+            text = File.read(file).gsub('templateUrl', 'template')
+            CoffeeScript.compile(text)
+          end.join
         )
       end
 
