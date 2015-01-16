@@ -1,6 +1,7 @@
 require 'haml'
 require 'coffee_script'
 require 'uglifier'
+require 'guard'
 
 module Guard
   class Rugular < Plugin
