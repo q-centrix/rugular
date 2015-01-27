@@ -8,11 +8,10 @@ angular.module('<%= name %>').controller('<%= name %>Controller', <%= name %>Con
 
 <%= name %> = ->
   directive =
-    bindToController: true
     controller: <%= name %>Controller
     controllerAs: 'vm'
     restrict: 'E'
-    templateUrl: 'components/<%= name %>/<%= name %>.html'
+    templateUrl: "components/<%= name %>/<%= name %>.html"
     scope:
       number: '='
 
