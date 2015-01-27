@@ -43,6 +43,7 @@ Structure](https://docs.google.com/document/d/1XXMvReO8-Awi1EZXAXS4PzDzdNvV6pGcu
 ├──  src/
 │   ├──  application.sass (manifest file)
 │   ├──  app/
+│   │   ├──  _app.sass
 │   │   ├──  app.module.coffee
 │   │   ├──  app.config.coffee
 │   │   ├──  app.controller.coffee
