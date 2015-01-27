@@ -1,7 +1,7 @@
 <%= name %>Routing = ($stateProvider) ->
-  $stateProvider.state '<%= name %>',
-    url: '/<%= name %>'
-    templateUrl: '/app/<%= name %>/<%= name %>.html'
+  $stateProvider.state 'root.<%= name %>',
+    url: '<%= name %>'
+    templateUrl: "app/<%= name %>/<%= name %>.html"
     controller: '<%= name %>Controller'
     controllerAs: '<%= name %>'
 

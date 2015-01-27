@@ -117,7 +117,8 @@ module Guard
     end
 
     def javascript_files
-      Dir.glob("**/*.module.coffee").sort(&reverse_nested) +
+      Dir.glob("vendor/**/*.coffee") +
+        Dir.glob("**/*.module.coffee").sort(&reverse_nested) +
         Dir.glob("**/*.routes.coffee").sort(&reverse_nested) +
         Dir.glob("**/*.factory.coffee").sort(&reverse_nested) +
         Dir.glob("**/*.controller.coffee").sort(&reverse_nested) +
