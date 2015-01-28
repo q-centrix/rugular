@@ -5,9 +5,12 @@ class RugularHaml
     new(haml_file).compile
   end
 
+  def self.delete(haml_file)
+    new(haml_file).delete
+  end
+
   def initialize(haml_file)
     @haml_file = haml_file
-    @html = ::Haml::Engine.new(File.read(haml_file)).render
   end
 
   def compile
@@ -15,12 +18,22 @@ class RugularHaml
 
     write_tmp_file
 
-    message = "Successfully compiled #{haml_file} to html!\n"
+    "Successfully compiled #{haml_file} to html!\n"
+  end
+
+  def delete
+    FileUtils.rm(tmp_file)
+
+    "Sucessfully removed #{tmp_file}\n"
   end
 
   private
 
-  attr_reader :haml_file, :html
+  def html
+    @_html ||= ::Haml::Engine.new(File.read(haml_file)).render
+  end
+
+  attr_reader :haml_file
 
   def tmp_file
     haml_file.gsub('src', '.tmp').gsub('haml', 'html')

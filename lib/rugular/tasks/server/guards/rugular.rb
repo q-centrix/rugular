@@ -35,7 +35,19 @@ module Guard
     end
 
     def run_on_removals(paths)
-      run_on_changes(paths)
+      [*paths].each do |file|
+        ::Guard::UI.info "Guard received delete event for #{file}"
+
+        case file.split('.').last
+        when 'haml'   then message = ::RugularHaml.delete(file)
+        when 'coffee' then message = compile_coffee(file)
+        when 'yaml'   then message = compile_yaml
+        end
+
+        ::Guard::UI.info message
+      end
+    rescue StandardError => error
+      handle_error_in_guard(error)
     end
 
     private
