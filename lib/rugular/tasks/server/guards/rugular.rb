@@ -1,7 +1,7 @@
-require 'haml'
 require 'coffee_script'
 require 'uglifier'
 require 'guard'
+require_relative 'rugular_haml'
 
 module Guard
   class Rugular < Plugin
@@ -23,13 +23,15 @@ module Guard
         ::Guard::UI.info "Guard received save event for #{file}"
 
         case file.split('.').last
-        when 'haml'   then message = compile_haml(file)
+        when 'haml'   then message = ::RugularHaml.compile(file)
         when 'coffee' then message = compile_coffee(file)
         when 'yaml'   then message = compile_yaml
         end
 
         ::Guard::UI.info message
       end
+    rescue StandardError => error
+      handle_error_in_guard(error)
     end
 
     def run_on_removals(paths)
@@ -37,22 +39,6 @@ module Guard
     end
 
     private
-
-    def compile_haml(file)
-      html = ::Haml::Engine.new(File.read(file)).render
-
-      if file.include? 'src/index.haml'
-        File.open('dist/index.html', 'w') do |file|
-          file.write html
-        end
-      else
-        compile_coffee('src/app/app.module.coffee')
-      end
-
-      message = "Successfully compiled #{file} to html!\n"
-    rescue StandardError => error
-      handle_error_in_guard(error)
-    end
 
     def compile_coffee(file)
       CoffeeScript.compile(file)
@@ -110,12 +96,6 @@ module Guard
       YAML.load(File.read('src/bower_components.yaml'))
     end
 
-    def handle_error_in_guard(error)
-      message = "#{error.message}"
-      ::Guard::UI.error message
-      throw :task_has_failed
-    end
-
     def javascript_files
       Dir.glob("vendor/**/*.coffee") +
         Dir.glob("**/*.module.coffee").sort(&reverse_nested) +
@@ -131,6 +111,10 @@ module Guard
       end
     end
 
+    def handle_error_in_guard(error)
+      ::Guard::UI.error error.message
+      throw :task_has_failed
+    end
   end
 end
 
