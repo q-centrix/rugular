@@ -10,7 +10,7 @@ module Guard
       super(opts)
     end
 
-    def start; true end
+    def start; run_all end
     def stop; true end
     def reload; true end
 
@@ -19,7 +19,7 @@ module Guard
     end
 
     def run_on_changes(paths)
-      paths.each do |file|
+      [*paths].each do |file|
         ::Guard::UI.info "Guard received save event for #{file}"
 
         case file.split('.').last
