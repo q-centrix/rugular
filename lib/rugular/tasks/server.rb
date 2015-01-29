@@ -15,7 +15,7 @@ module Rugular
     def add_template_application_sass_file
       FileUtils.cp(
         "#{lib_directory}/templates/server/application.sass",
-        "#{destination_root}/.tmp/application.sass"
+        "#{destination_root}/.application.sass"
       )
     end
 

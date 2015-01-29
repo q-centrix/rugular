@@ -2,6 +2,7 @@ require 'guard'
 require_relative 'rugular_haml'
 require_relative 'rugular_coffee'
 require_relative 'rugular_bower_components'
+require_relative 'rugular_index_html'
 
 module Guard
   class Rugular < Plugin
@@ -28,6 +29,8 @@ module Guard
         when 'yaml'   then message = ::RugularBowerComponents.compile
         end
 
+        ::RugularIndexHtml.update_javascript_script_tags
+
         ::Guard::UI.info message
       end
     rescue StandardError => error
@@ -43,6 +46,8 @@ module Guard
         when 'coffee' then message = ::RugularCoffee.delete(file)
         when 'yaml'   then fail 'what are you doing? trying to break rugular?!'
         end
+
+        ::RugularIndexHtml.update_javascript_script_tags
 
         ::Guard::UI.info message
       end

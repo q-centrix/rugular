@@ -22,6 +22,7 @@ rugular new <project_name>
 A new Rugular project contains the following folders:
 
 <pre>
+├──  .application.sass
 ├──  .gitignore/
 ├──  .tmp/
 ├──  bower_components/
@@ -46,6 +47,7 @@ A new Rugular project contains the following folders:
 
 | Folder/File Name | Description |
 | --- | --- |
+| .application.sass | A manifest sass file for development purposes |
 | .gitignore | Many of the files and folders here are not needed for source control, when deploying an application, please use the ``rugular build`` command described below |
 | .tmp | A temporary folder used for storing compiled Haml, Sass, and Coffeescript files. |
 | bower_components | A folder used by bower to install packages. |
