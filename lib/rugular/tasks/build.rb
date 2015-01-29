@@ -58,6 +58,10 @@ module Rugular
       end
     end
 
+    def create_application_css_file
+      `sass src/application.sass dist/application.css`
+    end
+
     private
 
     def javascript_files
