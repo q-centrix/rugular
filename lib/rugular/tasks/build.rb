@@ -16,6 +16,12 @@ module Rugular
       FileUtils.mkdir_p('./dist') unless File.directory? './dist'
     end
 
+    def write_dist_index_html_file
+      File.open('dist/index.html', 'w') do |file|
+        file.write ::Haml::Engine.new(File.read('src/index.haml')).render
+      end
+    end
+
     def compile_bower_javascript
 
     end
