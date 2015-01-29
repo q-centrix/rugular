@@ -1,6 +1,7 @@
 require 'guard'
 require_relative 'rugular_haml'
 require_relative 'rugular_coffee'
+require_relative 'rugular_bower_components'
 
 module Guard
   class Rugular < Plugin
@@ -24,7 +25,7 @@ module Guard
         case file.split('.').last
         when 'haml'   then message = ::RugularHaml.compile(file)
         when 'coffee' then message = ::RugularCoffee.compile(file)
-        when 'yaml'   then message = compile_yaml
+        when 'yaml'   then message = ::RugularBowerComponents.compile
         end
 
         ::Guard::UI.info message
@@ -50,39 +51,6 @@ module Guard
     end
 
     private
-
-    def compile_yaml
-      File.open("dist/bower_components.css", 'w') do |file|
-        file.write bower_css
-      end
-      File.open("dist/bower_components.js", 'w') do |file|
-        file.write(
-          # Uglifier.compile(
-            bower_javascript
-          # )
-        )
-      end
-
-      message = 'Successfully created bower_component dist files'
-    rescue StandardError => error
-      handle_error_in_guard(error)
-    end
-
-    def bower_css
-      bower_yaml.fetch('css').map do |filename|
-        File.read('bower_components/' + filename)
-      end.join
-    end
-
-    def bower_javascript
-      bower_yaml.fetch('js').map do |filename|
-        File.read('bower_components/' + filename)
-      end.join
-    end
-
-    def bower_yaml
-      YAML.load(File.read('src/bower_components.yaml'))
-    end
 
     def handle_error_in_guard(error)
       ::Guard::UI.error error.message
