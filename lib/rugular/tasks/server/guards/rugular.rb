@@ -10,7 +10,7 @@ module Guard
       super(opts)
     end
 
-    def start; run_all end
+    def start; true end
     def stop; true end
     def reload; true end
 
