@@ -23,11 +23,15 @@ module Rugular
     end
 
     def compile_bower_javascript
-
+      File.open('dist/bower_components.js', 'w') do |file|
+        file.write(Uglifier.compile(bower_javascript))
+      end
     end
 
     def compile_bower_stylesheets
-
+      File.open('dist/bower_components.css', 'w') do |file|
+        file.write bower_css
+      end
     end
 
     def create_application_js_file
@@ -69,6 +73,22 @@ module Rugular
       lambda do |x, y|
         x.scan('/').length <=> y.scan('/').length
       end
+    end
+
+    def bower_css
+      bower_yaml.fetch('css').map do |filename|
+        File.read('bower_components/' + filename)
+      end.join
+    end
+
+    def bower_javascript
+      bower_yaml.fetch('js').map do |filename|
+        File.read('bower_components/' + filename)
+      end.join
+    end
+
+    def bower_yaml
+      YAML.load(File.read('src/bower_components.yaml'))
     end
   end
 end
