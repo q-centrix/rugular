@@ -1,4 +1,8 @@
 Dir.glob("#{__dir__}/helpers/**/*.rb").each {|file| require file}
+require 'uglifier'
+require 'coffee_script'
+require 'sass'
+require 'haml'
 
 module Rugular
   class Build < Thor::Group
@@ -8,20 +12,57 @@ module Rugular
 
     Rugular::AppChecker.check_rugular!(self.name, new.destination_root)
 
-    # TODO: build from the ./.tmp folder
-    def compile_coffeescript
-      puts CoffeeScript.compile File.read("app.coffee")
+    def create_dist_folder
+      FileUtils.mkdir_p('./dist') unless File.directory? './dist'
     end
 
-    def uglify_css
-      puts Uglifier.compile(CoffeeScript.compile File.read("app.coffee"))
+    def compile_bower_javascript
+
     end
 
-    def interpret_sass
-      template = File.load('stylesheets/sassy.sass')
-      sass_engine = Sass::Engine.new(template)
-      output = sass_engine.render
-      puts output
+    def compile_bower_stylesheets
+
+    end
+
+    def create_application_js_file
+      File.open('dist/application.js', 'w') do |file|
+        file.write(
+          Uglifier.compile(
+            javascript_files.map do |file|
+              text = File.read(file).gsub('templateUrl', 'template')
+              CoffeeScript.compile(text)
+            end.join
+          )
+        )
+      end
+    end
+
+    def inline_template_url_files
+      (Dir.glob("**/*.haml") - ["src/index.haml"]).each do |haml_file|
+        haml_html = ::Haml::Engine.new(File.read(haml_file), {}).render
+        html = haml_html.tr("\n", '').gsub("'", "\'")
+        html_filename = haml_file.gsub('src/', '').gsub('haml', 'html')
+        IO.write('dist/application.js', File.open('dist/application.js') do |f|
+          f.read.gsub(html_filename, html)
+        end)
+      end
+    end
+
+    private
+
+    def javascript_files
+      Dir.glob("vendor/**/*.coffee") +
+        Dir.glob("src/**/*.module.coffee").sort(&reverse_nested) +
+        Dir.glob("src/**/*.routes.coffee").sort(&reverse_nested) +
+        Dir.glob("src/**/*.factory.coffee").sort(&reverse_nested) +
+        Dir.glob("src/**/*.controller.coffee").sort(&reverse_nested) +
+        Dir.glob("src/**/*.directive.coffee").sort(&reverse_nested)
+    end
+
+    def reverse_nested
+      lambda do |x, y|
+        x.scan('/').length <=> y.scan('/').length
+      end
     end
   end
 end

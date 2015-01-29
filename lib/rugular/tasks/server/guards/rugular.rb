@@ -1,7 +1,6 @@
-require 'coffee_script'
-require 'uglifier'
 require 'guard'
 require_relative 'rugular_haml'
+require_relative 'rugular_coffee'
 
 module Guard
   class Rugular < Plugin
@@ -15,7 +14,7 @@ module Guard
     def reload; true end
 
     def run_all
-      run_on_changes('src/app/app.coffee')
+      run_on_changes(Dir.glob("src/**/*"))
     end
 
     def run_on_changes(paths)
@@ -24,7 +23,7 @@ module Guard
 
         case file.split('.').last
         when 'haml'   then message = ::RugularHaml.compile(file)
-        when 'coffee' then message = compile_coffee(file)
+        when 'coffee' then message = ::RugularCoffee.compile(file)
         when 'yaml'   then message = compile_yaml
         end
 
@@ -40,8 +39,8 @@ module Guard
 
         case file.split('.').last
         when 'haml'   then message = ::RugularHaml.delete(file)
-        when 'coffee' then message = compile_coffee(file)
-        when 'yaml'   then message = compile_yaml
+        when 'coffee' then message = ::RugularCoffee.delete(file)
+        when 'yaml'   then fail 'what are you doing? trying to break rugular?!'
         end
 
         ::Guard::UI.info message
@@ -52,39 +51,16 @@ module Guard
 
     private
 
-    def compile_coffee(file)
-      CoffeeScript.compile(file)
-
-      File.open('dist/application.js', 'w') do |file|
-        file.write(
-          javascript_files.map do |file|
-            text = File.read(file).gsub('templateUrl', 'template')
-            CoffeeScript.compile(text)
-          end.join
-        )
-      end
-
-      # Inline templates into javascript
-      (Dir.glob("**/*.haml") - ["src/index.haml"]).each do |haml_file|
-        haml_html = ::Haml::Engine.new(File.read(haml_file), {}).render
-        html = haml_html.tr("\n", '').gsub('"', '\"')
-        html_filename = haml_file.gsub('src/', '').gsub('haml', 'html')
-        IO.write('dist/application.js', File.open('dist/application.js') do |f|
-          f.read.gsub(html_filename, html)
-        end)
-      end
-
-      message = "Successfully compiled #{file} to js!\n"
-    rescue StandardError => error
-      handle_error_in_guard(error)
-    end
-
     def compile_yaml
       File.open("dist/bower_components.css", 'w') do |file|
         file.write bower_css
       end
       File.open("dist/bower_components.js", 'w') do |file|
-        file.write Uglifier.compile(bower_javascript)
+        file.write(
+          # Uglifier.compile(
+            bower_javascript
+          # )
+        )
       end
 
       message = 'Successfully created bower_component dist files'
@@ -106,21 +82,6 @@ module Guard
 
     def bower_yaml
       YAML.load(File.read('src/bower_components.yaml'))
-    end
-
-    def javascript_files
-      Dir.glob("vendor/**/*.coffee") +
-        Dir.glob("**/*.module.coffee").sort(&reverse_nested) +
-        Dir.glob("**/*.routes.coffee").sort(&reverse_nested) +
-        Dir.glob("**/*.factory.coffee").sort(&reverse_nested) +
-        Dir.glob("**/*.controller.coffee").sort(&reverse_nested) +
-        Dir.glob("**/*.directive.coffee").sort(&reverse_nested)
-    end
-
-    def reverse_nested
-      lambda do |x, y|
-        x.scan('/').length <=> y.scan('/').length
-      end
     end
 
     def handle_error_in_guard(error)

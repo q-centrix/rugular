@@ -36,6 +36,7 @@ This will create the initial project template that follows [Google's Best
 Practices for an Angular App
 Structure](https://docs.google.com/document/d/1XXMvReO8-Awi1EZXAXS4PzDzdNvV6pGcuaF4Q9821Es/pub).
 <pre>
+├──  .tmp/
 ├──  bower_components/
 ├──  bower.json
 ├──  Gemfile
