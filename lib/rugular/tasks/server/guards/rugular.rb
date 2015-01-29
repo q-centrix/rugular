@@ -1,7 +1,7 @@
 require 'guard'
 require_relative 'rugular_haml'
 require_relative 'rugular_coffee'
-require_relative 'rugular_bower_components'
+require_relative 'rugular_vendor_and_bower_components'
 require_relative 'rugular_index_html'
 
 module Guard
@@ -26,7 +26,7 @@ module Guard
         case file.split('.').last
         when 'haml'   then message = ::RugularHaml.compile(file)
         when 'coffee' then message = ::RugularCoffee.compile(file)
-        when 'yaml'   then message = ::RugularBowerComponents.compile
+        when 'yaml'   then message = ::RugularVendorAndBowerComponents.compile
         end
 
         ::RugularIndexHtml.update_javascript_script_tags
