@@ -3,28 +3,15 @@ Status](https://circleci.com/gh/currica/rugular.svg?style=shield&circle-token=:c
 
 # Rugular
 
-Rugular is a ruby scaffolding framework to build AngularJS apps. It builds a
-minified and compressed version of a front-end into the ``./dist`` folder that
-can be served as a standalone AngularJS app. The goal of this framework is to
-create applications written with [best AngularJS
-practices](https://github.com/johnpapa/angularjs-styleguide) using
-CoffeeScript, Haml and Sass.
+Rugular is a framework to build AngularJS apps; the goal is to
+provide a rails-like interface to constructing a UI with Sass, Haml, and
+Coffeescript, and generators to create template files.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'rugular'
+```bash
+gem install rugular
 ```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install rugular
 
 ## Start a new project
 
@@ -32,17 +19,17 @@ Or install it yourself as:
 rugular new <project_name>
 ```
 
-This will create the initial project template that follows [Google's Best
-Practices for an Angular App
-Structure](https://docs.google.com/document/d/1XXMvReO8-Awi1EZXAXS4PzDzdNvV6pGcuaF4Q9821Es/pub).
+A new Rugular project contains the following folders:
+
 <pre>
+├──  .gitignore/
 ├──  .tmp/
 ├──  bower_components/
 ├──  bower.json
 ├──  Gemfile
+├──  node_modules/
 ├──  package.json
 ├──  src/
-│   ├──  application.sass (manifest file)
 │   ├──  app/
 │   │   ├──  _app.sass
 │   │   ├──  app.module.coffee
@@ -52,42 +39,22 @@ Structure](https://docs.google.com/document/d/1XXMvReO8-Awi1EZXAXS4PzDzdNvV6pGcu
 │   │   ├──  app.routes.coffee
 │   │   ├──  index.haml
 │   ├──  components/
-│   ├──  404.html
-│   ├──  500.html
 │   ├──  favico.ico
+│   ├──  images/
+├──  vendor/
 </pre>
 
-## Development Server
-
-Rugular includes a built in server that will interpret Coffeescript/Haml/Sass
-and run a server on ``localhost:8080``. To run the server, type:
-
-```bash
-bundle exec rugular server
-```
-
-You must have [http-server](https://github.com/nodeapps/http-server) installed.
-
-## Running the tests
-
-### Unit Tests
-
-Unit tests are included in the development server. To run these tests just once
-(perhaps for CI) run:
-
-```
-karma start karma.conf.js --single-run
-```
-
-### End to End tests
-
-End to end tests with protractor can be run with:
-
-```bash
-protractor
-```
-
-Please make sure you have mocha installed globally!
+| Folder/File Name | Description |
+| --- | --- |
+| .gitignore | Many of the files and folders here are not needed for source control, when deploying an application, please use the ``rugular build`` command described below |
+| .tmp | A temporary folder used for storing compiled Haml, Sass, and Coffeescript files. |
+| bower_components | A folder used by bower to install packages. |
+| bower.json | A list of packages to be installed by bower |
+| Gemfile | A way to install the ``rugular`` gem locally. This is not needed if you install ``rugular`` globally |
+| node_modules | A folder used by npm to install packages. |
+| package.json | A list of packages to be installed by npm |
+| src | A folder containing the source code unique to a rugular application.  Rugular apps are written in Haml, Coffeescript and Sass and designed to follow [Google's Best Practices for an Angular App Structure](https://docs.google.com/document/d/1XXMvReO8-Awi1EZXAXS4PzDzdNvV6pGcuaF4Q9821Es/pub).  |
+| vendor | 3rd-party javascript, coffeescript, css, and sass files that do not come with bower management. All of these files are included before any code in src. |
 
 ### Rugular Generators
 
@@ -144,6 +111,39 @@ A component refers to shareable, abstracted angular modules. To create a
 component, simply run any generator command with the ``-c`` option and the
 service will be created in the ``src/components`` folder.
 
+
+## Development Server
+
+Rugular includes a built in server that will interpret Coffeescript/Haml/Sass
+and run a server on ``localhost:8080``. To run the server, type:
+
+```bash
+bundle exec rugular server
+```
+
+You must have [http-server](https://github.com/nodeapps/http-server) installed.
+
+## Running the tests
+
+### Unit Tests
+
+Unit tests are included in the development server. To run these tests just once
+(perhaps for CI) run:
+
+```
+karma start karma.conf.js --single-run
+```
+
+### End to End tests
+
+End to end tests with protractor can be run with:
+
+```bash
+protractor
+```
+
+Please make sure you have mocha installed globally!
+
 ## Running the Test Suite
 
 To run the test suite just once (such as in a continuous environment) execute:
@@ -154,8 +154,19 @@ rugular ci
 
 ## Building the app
 
-Rugular builds a minified, compressed version of your app in the ``/dist``
-folder. This is done for you by the ``rugular server`` command.
+To build a minified version of your app in the ``/dist`` folder execute:
+
+```bash
+rugular build
+```
+
+This will create the following files:
+
+* index.html
+* application.css (a minified version of the sass files in the src folder)
+* vendor.css (a minified version of bower_component and vendor files)
+* application.js (a minified version of the coffee files in the src folder)
+* vendor.js (a minified version of bower_component and vendor files)
 
 ## Contributing
 
