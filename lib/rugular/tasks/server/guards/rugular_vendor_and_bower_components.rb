@@ -9,14 +9,14 @@ class RugularVendorAndBowerComponents
   def initialize; end
 
   def compile
-    File.open('.tmp/bower_components.css', 'w') do |file|
+    File.open('.tmp/vendor.css', 'w') do |file|
       file.write bower_css
     end
-    File.open('.tmp/bower_components.js', 'w') do |file|
+    File.open('.tmp/vendor.js', 'w') do |file|
       file.write(Uglifier.compile(bower_and_vendor_javascript))
     end
 
-    message = 'Successfully created bower_component dist files'
+    message = 'Successfully created vendor asset files'
   rescue StandardError => error
     handle_error_in_guard(error)
   end
@@ -28,13 +28,13 @@ class RugularVendorAndBowerComponents
   end
 
   def bower_css
-    bower_yaml.fetch('css').map do |filename|
+    bower_yaml.fetch('bower_components').fetch('css').map do |filename|
       File.read('bower_components/' + filename)
     end.join
   end
 
   def bower_javascript
-    bower_yaml.fetch('js').map do |filename|
+    bower_yaml.fetch('bower_components').fetch('js').map do |filename|
       File.read('bower_components/' + filename)
     end.join
   end
@@ -46,7 +46,6 @@ class RugularVendorAndBowerComponents
   end
 
   def bower_yaml
-    YAML.load(File.read('src/bower_components.yaml'))
+    YAML.load(File.read('src/vendor_and_bower_components.yaml'))
   end
 end
-
