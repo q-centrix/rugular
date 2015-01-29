@@ -12,6 +12,13 @@ module Rugular
       "(set in lib/rugular/tasks/server/Procfile)"
     )
 
+    def add_template_application_sass_file
+      FileUtils.cp(
+        "#{lib_directory}/templates/server/application.sass",
+        "#{destination_root}/.tmp/application.sass"
+      )
+    end
+
     def start_server
       system(
         "bundle exec foreman start --color --root=#{destination_root} " \
@@ -23,6 +30,10 @@ module Rugular
 
     def rugular_procfile
       "#{__dir__}/server/Procfile"
+    end
+
+    def lib_directory
+      __dir__.chomp('tasks')
     end
   end
 end
