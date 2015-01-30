@@ -12,12 +12,7 @@ module Guard
     end
 
     def start
-      File.open('.tmp/index.html', 'w') do |file|
-        file.write ::Haml::Engine.new(
-          File.read('src/index.haml')
-        ).render
-      end
-      true
+      ::RugularHaml.compile('src/index.haml')
     end
 
     def stop; true end
@@ -29,7 +24,7 @@ module Guard
 
     def run_on_changes(paths)
       [*paths].each do |file|
-        if file.split('.').first =~ /images|fonts/
+        if file =~ /images|fonts/
           next(
             ::Guard::UI.info FileUtils.cp(file, ".tmp/#{File.basename(file)}")
           )
@@ -52,6 +47,12 @@ module Guard
     def run_on_removals(paths)
       [*paths].each do |file|
         ::Guard::UI.info "Guard received delete event for #{file}"
+
+        if file =~ /images|fonts/
+          next(
+            ::Guard::UI.info FileUtils.rm(".tmp/#{File.basename(file)}")
+          )
+        end
 
         message = case file.split('.').last
         when 'haml'   then ::RugularHaml.delete(file)

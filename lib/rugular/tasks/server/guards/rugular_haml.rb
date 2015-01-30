@@ -14,8 +14,6 @@ class RugularHaml
   end
 
   def compile
-    write_dist_index_html_file if haml_file.include? 'src/index.haml'
-
     write_tmp_file
 
     "Successfully compiled #{haml_file} to html!\n"
@@ -37,10 +35,6 @@ class RugularHaml
 
   def tmp_file
     haml_file.gsub('src', '.tmp').gsub('haml', 'html')
-  end
-
-  def write_dist_index_html_file
-    File.open('dist/index.html', 'w', &write_html)
   end
 
   def write_tmp_file
