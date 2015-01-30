@@ -1,7 +1,9 @@
-require 'haml'
-require 'coffee_script'
-require 'uglifier'
 require 'guard'
+require_relative 'rugular_haml'
+require_relative 'rugular_coffee'
+require_relative 'rugular_vendor_and_bower_components'
+require_relative 'rugular_index_html'
+require_relative 'rugular_assets'
 
 module Guard
   class Rugular < Plugin
@@ -10,127 +12,68 @@ module Guard
       super(opts)
     end
 
-    def start; true end
+    def start
+      ::RugularHaml.compile('src/index.haml')
+    end
+
     def stop; true end
     def reload; true end
 
     def run_all
-      run_on_changes('src/app/app.coffee')
+      run_on_changes(Dir.glob("src/**/*"))
     end
 
     def run_on_changes(paths)
-      paths.each do |file|
-        ::Guard::UI.info "Guard received save event for #{file}"
+      [*paths].each do |file|
+        message = case File.extname(file)
+                  when '.coffee' then ::RugularCoffee.compile(file)
+                  when '.haml'   then ::RugularHaml.compile(file)
+                  when '.yaml'   then ::RugularVendorAndBowerComponents.compile
+                  when '.png'    then ::RugularAssets.copy_image(file)
+                  when '.jpg'    then ::RugularAssets.copy_image(file)
+                  when '.ttf'    then ::RugularAssets.copy_font(file)
+                  when '.woff'   then ::RugularAssets.copy_font(file)
+                  else next 'Rugular does not know how to handle this file'
+                  end
 
-        case file.split('.').last
-        when 'haml'   then message = compile_haml(file)
-        when 'coffee' then message = compile_coffee(file)
-        when 'yaml'   then message = compile_yaml
-        end
+        ::RugularIndexHtml.update_javascript_script_tags
 
         ::Guard::UI.info message
       end
+    rescue StandardError => error
+      handle_error_in_guard(error)
     end
 
     def run_on_removals(paths)
-      run_on_changes(paths)
+      [*paths].each do |file|
+        ::Guard::UI.info "Guard received delete event for #{file}"
+
+        message = case File.extname(file)
+                  when '.coffee' then ::RugularCoffee.delete(file)
+                  when '.haml'   then ::RugularHaml.delete(file)
+                  when '.png'    then ::RugularAssets.delete_image(file)
+                  when '.jpg'    then ::RugularAssets.delete_image(file)
+                  when '.ttf'    then ::RugularAssets.delete_font(file)
+                  when '.woff'   then ::RugularAssets.delete_font(file)
+                  when '.yaml'
+                    then fail 'what are you doing? trying to break rugular?!'
+                  else next 'Rugular does not know how to handle this file'
+                  end
+
+        ::RugularIndexHtml.update_javascript_script_tags
+
+        ::Guard::UI.info message
+      end
+    rescue StandardError => error
+      handle_error_in_guard(error)
     end
 
     private
 
-    def compile_haml(file)
-      html = ::Haml::Engine.new(File.read(file)).render
-
-      if file.include? 'src/index.haml'
-        File.open('dist/index.html', 'w') do |file|
-          file.write html
-        end
-      else
-        compile_coffee('src/app/app.module.coffee')
-      end
-
-      message = "Successfully compiled #{file} to html!\n"
-    rescue StandardError => error
-      handle_error_in_guard(error)
-    end
-
-    def compile_coffee(file)
-      CoffeeScript.compile(file)
-
-      File.open('dist/application.js', 'w') do |file|
-        file.write(
-          javascript_files.map do |file|
-            text = File.read(file).gsub('templateUrl', 'template')
-            CoffeeScript.compile(text)
-          end.join
-        )
-      end
-
-      # Inline templates into javascript
-      (Dir.glob("**/*.haml") - ["src/index.haml"]).each do |haml_file|
-        haml_html = ::Haml::Engine.new(File.read(haml_file), {}).render
-        html = haml_html.tr("\n", '').gsub('"', '\"')
-        html_filename = haml_file.gsub('src/', '').gsub('haml', 'html')
-        IO.write('dist/application.js', File.open('dist/application.js') do |f|
-          f.read.gsub(html_filename, html)
-        end)
-      end
-
-      message = "Successfully compiled #{file} to js!\n"
-    rescue StandardError => error
-      handle_error_in_guard(error)
-    end
-
-    def compile_yaml
-      File.open("dist/bower_components.css", 'w') do |file|
-        file.write bower_css
-      end
-      File.open("dist/bower_components.js", 'w') do |file|
-        file.write Uglifier.compile(bower_javascript)
-      end
-
-      message = 'Successfully created bower_component dist files'
-    rescue StandardError => error
-      handle_error_in_guard(error)
-    end
-
-    def bower_css
-      bower_yaml.fetch('css').map do |filename|
-        File.read('bower_components/' + filename)
-      end.join
-    end
-
-    def bower_javascript
-      bower_yaml.fetch('js').map do |filename|
-        File.read('bower_components/' + filename)
-      end.join
-    end
-
-    def bower_yaml
-      YAML.load(File.read('src/bower_components.yaml'))
-    end
-
     def handle_error_in_guard(error)
-      message = "#{error.message}"
-      ::Guard::UI.error message
+      ::Guard::UI.error error.message
       throw :task_has_failed
     end
-
-    def javascript_files
-      Dir.glob("vendor/**/*.coffee") +
-        Dir.glob("**/*.module.coffee").sort(&reverse_nested) +
-        Dir.glob("**/*.routes.coffee").sort(&reverse_nested) +
-        Dir.glob("**/*.factory.coffee").sort(&reverse_nested) +
-        Dir.glob("**/*.controller.coffee").sort(&reverse_nested) +
-        Dir.glob("**/*.directive.coffee").sort(&reverse_nested)
-    end
-
-    def reverse_nested
-      lambda do |x, y|
-        x.scan('/').length <=> y.scan('/').length
-      end
-    end
-
   end
 end
 

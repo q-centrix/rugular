@@ -5,7 +5,6 @@
 
     -# add a list of bower css and javascript files you wish to include in the
     -# bower_components.yml file
-
     %link(href='bower_components.css', media='screen', rel='stylesheet')
     %link(href='application.css', media='screen', rel='stylesheet')
 
@@ -14,5 +13,7 @@
 
     %ui-view
 
+    -# Do not change these two lines, the application.js file is the manifest
+    -# file in dist
     %script(src='bower_components.js')
     %script(src='application.js')
