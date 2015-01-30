@@ -111,5 +111,9 @@ module Rugular
     def bower_yaml
       YAML.load(File.read('src/vendor_and_bower_components.yaml'))
     end
+
+    def lib_directory
+      __dir__.chomp('tasks')
+    end
   end
 end
