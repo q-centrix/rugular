@@ -33,11 +33,11 @@ class RugularIndexHtml
   end
 
   def javascript_files
-    Dir.glob("src/**/*.module.coffee").sort(&reverse_nested) +
-      Dir.glob("src/**/*.routes.coffee").sort(&reverse_nested) +
-      Dir.glob("src/**/*.factory.coffee").sort(&reverse_nested) +
-      Dir.glob("src/**/*.controller.coffee").sort(&reverse_nested) +
-      Dir.glob("src/**/*.directive.coffee").sort(&reverse_nested)
+    Dir.glob("src/{components,src}/**/*.module.coffee").sort(&reverse_nested) +
+      Dir.glob("src/{components,src}/**/*.routes.coffee").sort(&reverse_nested) +
+      Dir.glob("src/{components,src}/**/*.factory.coffee").sort(&reverse_nested) +
+      Dir.glob("src/{components,src}/**/*.controller.coffee").sort(&reverse_nested) +
+      Dir.glob("src/{components,src}/**/*.directive.coffee").sort(&reverse_nested)
   end
 
   def reverse_nested
