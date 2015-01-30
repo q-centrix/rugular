@@ -13,7 +13,7 @@ module Guard
     end
 
     def start
-      ::RugularHaml.compile('src/index.haml')
+      run_on_changes('src/index.haml')
     end
 
     def stop; true end
