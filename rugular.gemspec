@@ -27,6 +27,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'foreman',       '~> 0'
   spec.add_runtime_dependency 'thor',          '~> 0'
   spec.add_runtime_dependency 'sass-globbing', '~> 1'
+  spec.add_runtime_dependency 'nokogiri',      '~> 1'
 
   spec.add_development_dependency 'aruba',  '~> 0'
   spec.add_development_dependency 'byebug', '~> 3'

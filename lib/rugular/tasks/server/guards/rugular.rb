@@ -11,7 +11,15 @@ module Guard
       super(opts)
     end
 
-    def start; true end
+    def start
+      File.open('.tmp/index.html', 'w') do |file|
+        file.write ::Haml::Engine.new(
+          File.read('src/index.haml')
+        ).render
+      end
+      true
+    end
+
     def stop; true end
     def reload; true end
 
@@ -21,12 +29,16 @@ module Guard
 
     def run_on_changes(paths)
       [*paths].each do |file|
-        ::Guard::UI.info "Guard received save event for #{file}"
+        if file.split('.').first =~ /images|fonts/
+          next(
+            ::Guard::UI.info FileUtils.cp(file, ".tmp/#{File.basename(file)}")
+          )
+        end
 
-        case file.split('.').last
-        when 'haml'   then message = ::RugularHaml.compile(file)
-        when 'coffee' then message = ::RugularCoffee.compile(file)
-        when 'yaml'   then message = ::RugularVendorAndBowerComponents.compile
+        message = case file.split('.').last
+        when 'haml'   then ::RugularHaml.compile(file)
+        when 'yaml'   then ::RugularVendorAndBowerComponents.compile
+        when 'coffee' then ::RugularCoffee.compile(file)
         end
 
         ::RugularIndexHtml.update_javascript_script_tags
@@ -41,9 +53,9 @@ module Guard
       [*paths].each do |file|
         ::Guard::UI.info "Guard received delete event for #{file}"
 
-        case file.split('.').last
-        when 'haml'   then message = ::RugularHaml.delete(file)
-        when 'coffee' then message = ::RugularCoffee.delete(file)
+        message = case file.split('.').last
+        when 'haml'   then ::RugularHaml.delete(file)
+        when 'coffee' then ::RugularCoffee.delete(file)
         when 'yaml'   then fail 'what are you doing? trying to break rugular?!'
         end
 
