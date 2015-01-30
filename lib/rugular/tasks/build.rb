@@ -69,6 +69,14 @@ module Rugular
       `sass .application.sass dist/application.css -r sass-globbing`
     end
 
+    def copy_images
+      FileUtils.cp_r('src/images', 'dist')
+    end
+
+    def copy_fonts
+      FileUtils.cp_r('src/fonts', 'dist')
+    end
+
     private
 
     def bower_and_vendor_javascript
