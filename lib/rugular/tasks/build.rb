@@ -96,11 +96,13 @@ module Rugular
     end
 
     def javascript_files
-      Dir.glob("src/**/*.module.coffee").sort(&reverse_nested) +
-      Dir.glob("src/**/*.routes.coffee").sort(&reverse_nested) +
-      Dir.glob("src/**/*.factory.coffee").sort(&reverse_nested) +
-      Dir.glob("src/**/*.controller.coffee").sort(&reverse_nested) +
-      Dir.glob("src/**/*.directive.coffee").sort(&reverse_nested)
+      Dir.glob("src/{components,app}/**/*.module.coffee").sort(&reverse_nested) +
+        Dir.glob("src/{components,app}/**/*.routes.coffee").sort(&reverse_nested) +
+        Dir.glob("src/{components,app}/**/*.factory.coffee").sort(&reverse_nested) +
+        Dir.glob("src/{components,app}/**/*.filter.coffee").sort(&reverse_nested) +
+        Dir.glob("src/{components,app}/**/*.animation.coffee").sort(&reverse_nested) +
+        Dir.glob("src/{components,app}/**/*.controller.coffee").sort(&reverse_nested) +
+        Dir.glob("src/{components,app}/**/*.directive.coffee").sort(&reverse_nested)
     end
 
     def reverse_nested

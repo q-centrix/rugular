@@ -36,6 +36,8 @@ class RugularIndexHtml
     Dir.glob("src/{components,app}/**/*.module.coffee").sort(&reverse_nested) +
       Dir.glob("src/{components,app}/**/*.routes.coffee").sort(&reverse_nested) +
       Dir.glob("src/{components,app}/**/*.factory.coffee").sort(&reverse_nested) +
+      Dir.glob("src/{components,app}/**/*.filter.coffee").sort(&reverse_nested) +
+      Dir.glob("src/{components,app}/**/*.animation.coffee").sort(&reverse_nested) +
       Dir.glob("src/{components,app}/**/*.controller.coffee").sort(&reverse_nested) +
       Dir.glob("src/{components,app}/**/*.directive.coffee").sort(&reverse_nested)
   end

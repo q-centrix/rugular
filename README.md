@@ -138,6 +138,12 @@ rugular generate factory <factory_name>
 rugular generate filter <factory_name>
 ```
 
+#### Create an Animation (TODO)
+
+```bash
+rugular generate animation <factory_name>
+```
+
 ### Creating a component
 
 A component refers to shareable, abstracted angular modules, that are not
