@@ -58,8 +58,23 @@ module Rugular
       end
     end
 
+    def add_template_application_sass_file
+      FileUtils.cp(
+        "#{lib_directory}/templates/server/application.sass",
+        "#{destination_root}/.application.sass"
+      )
+    end
+
     def create_application_css_file
       `sass .application.sass dist/application.css -r sass-globbing`
+    end
+
+    def copy_images
+      FileUtils.cp_r('src/images', 'dist')
+    end
+
+    def copy_fonts
+      FileUtils.cp_r('src/fonts', 'dist')
     end
 
     private
@@ -103,6 +118,10 @@ module Rugular
 
     def bower_yaml
       YAML.load(File.read('src/vendor_and_bower_components.yaml'))
+    end
+
+    def lib_directory
+      __dir__.chomp('tasks')
     end
   end
 end
