@@ -64,43 +64,63 @@ A new Rugular project contains the following folders:
 
 Rugular generators assist with developing apps by creating template files in
 the src directory. These are influenced by [John Papa's AngularJS Style
-Guide](https://github.com/johnpapa/angularjs-styleguide)
+Guide](https://github.com/johnpapa/angularjs-styleguide).
+
+Each command will create a folder in the ``src/app`` directory that will
+contain the template files and new angular module file if one does not already
+exist. It will also register the angular module, by inserting its declaration
+in the appropriate spot in your application.
+
+Each command can also contain nesting instructions when you find it appropriate
+to nest angular modules. An example of nesting is given below.
 
 #### Create a Route
 
-A route creates a angular route, controller, and view in the app folder.
+A route refers to the files necessary to generate a URL route in an angular
+application. Rugular utilizes [Angular UI
+Router](https://github.com/angular-ui/ui-router) in its template files.
 
 ```bash
 rugular generate route <route_name>
 ```
 
-This command will create a folder in the ``src/app`` directory that will
-contain a controller and service namespaced with a new module of the route
-name if one dos not already exist. It will also register the new module in the
-``app.module.js`` file.
+For example, ``rugular generate route dashboard`` generates the following files:
 
-Routes can be nested in another folder representing a module. For example, to
-nest a route inside a pre-existing 'test' module, execute:
+```
+src/app/_dashboard.sass
+src/app/dashboard.controller.coffee
+src/app/dashboard.haml
+src/app/dashboard.module.coffee
+src/app/dashboard.routes.coffee
+```
+
+In your browser, the default ui can be seen by visiting ``/dashboard``
+
+#### Creating a nested route:
 
 ```bash
-rugular generate route test:<route_name>
+rugular generate route admin:dashboard
 ```
+
+generates:
+
+```
+src/app/admin/_dashboard.sass
+src/app/admin/dashboard.controller.coffee
+src/app/admin/dashboard.haml
+src/app/admin/dashboard.module.coffee
+src/app/admin/dashboard.routes.coffee
+```
+
+with a new route at ``/admin/dashboard``
 
 #### Create a Directive
 
+A [directive](https://docs.angularjs.org/guide/directive) refers to an
+abstracted piece of DOM.
+
 ```bash
 rugular generate directive <directive_name>
-```
-
-This command will create a directive and controller namespaced with a new
-module of the feature name if one does not already exist. It will also register
-the new module in the ``app.module.js`` file.
-
-Directives can be nested in another folder representing a module like routes.
-For example, to nest a directive inside a pre-existing 'test' module, execute:
-
-```bash
-rugular generate directive test:<directive_name>
 ```
 
 #### Create a Factory (TODO)
@@ -109,52 +129,39 @@ rugular generate directive test:<directive_name>
 rugular generate factory <factory_name>
 ```
 
-This command will create contain a factory namespaced with a new module of the
-feature name if one does not already exist. It will also register the new
-module in the ``app.module.js`` file.
+#### Create a Filter (TODO)
+
+```bash
+rugular generate filter <factory_name>
+```
 
 ### Creating a component
 
-A component refers to shareable, abstracted angular modules. To create a
-component, simply run any generator command with the ``-c`` option and the
-service will be created in the ``src/components`` folder.
-
+A component refers to shareable, abstracted angular modules, that are not
+particular to your application. For instance, if you are developing a suite of
+separate applications, a common navigation bar may qualify as a component. To
+create a component, simply run any generator command with the ``-c`` option and
+the service will be created in the ``src/components`` folder.
 
 ## Development Server
 
 Rugular includes a built in server that will interpret Coffeescript/Haml/Sass
-and run a server on ``localhost:8080``. To run the server, type:
+and run a server on ``localhost:5000``. To run the server, type:
 
 ```bash
 bundle exec rugular server
 ```
 
-You must have [http-server](https://github.com/nodeapps/http-server) installed.
-
 ## Running the tests
 
-### Unit Tests
+### During development
 
-Unit tests are included in the development server. To run these tests just once
-(perhaps for CI) run:
+``rugular server`` runs the tests with karma. Karma watches the files in the
+``src`` directory and runs the tests on each save.
 
-```
-karma start karma.conf.js --single-run
-```
+### Running the tests once
 
-### End to End tests
-
-End to end tests with protractor can be run with:
-
-```bash
-protractor
-```
-
-Please make sure you have mocha installed globally!
-
-## Running the Test Suite
-
-To run the test suite just once (such as in a continuous environment) execute:
+To run these tests just once (perhaps for CI) run:
 
 ```bash
 rugular ci
