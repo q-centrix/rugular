@@ -3,6 +3,7 @@ require_relative 'rugular_haml'
 require_relative 'rugular_coffee'
 require_relative 'rugular_vendor_and_bower_components'
 require_relative 'rugular_index_html'
+require_relative 'rugular_assets'
 
 module Guard
   class Rugular < Plugin
@@ -24,17 +25,16 @@ module Guard
 
     def run_on_changes(paths)
       [*paths].each do |file|
-        if file =~ /images|fonts/
-          next(
-            ::Guard::UI.info FileUtils.cp(file, ".tmp/#{File.basename(file)}")
-          )
-        end
-
-        message = case file.split('.').last
-        when 'haml'   then ::RugularHaml.compile(file)
-        when 'yaml'   then ::RugularVendorAndBowerComponents.compile
-        when 'coffee' then ::RugularCoffee.compile(file)
-        end
+        message = case File.extname(file)
+                  when '.coffee' then ::RugularCoffee.compile(file)
+                  when '.haml'   then ::RugularHaml.compile(file)
+                  when '.yaml'   then ::RugularVendorAndBowerComponents.compile
+                  when '.png'    then ::RugularAssets.copy_image(file)
+                  when '.jpg'    then ::RugularAssets.copy_image(file)
+                  when '.ttf'    then ::RugularAssets.copy_font(file)
+                  when '.woff'   then ::RugularAssets.copy_font(file)
+                  else next 'Rugular does not know how to handle this file'
+                  end
 
         ::RugularIndexHtml.update_javascript_script_tags
 
@@ -48,17 +48,17 @@ module Guard
       [*paths].each do |file|
         ::Guard::UI.info "Guard received delete event for #{file}"
 
-        if file =~ /images|fonts/
-          next(
-            ::Guard::UI.info FileUtils.rm(".tmp/#{File.basename(file)}")
-          )
-        end
-
-        message = case file.split('.').last
-        when 'haml'   then ::RugularHaml.delete(file)
-        when 'coffee' then ::RugularCoffee.delete(file)
-        when 'yaml'   then fail 'what are you doing? trying to break rugular?!'
-        end
+        message = case File.extname(file)
+                  when '.coffee' then ::RugularCoffee.delete(file)
+                  when '.haml'   then ::RugularHaml.delete(file)
+                  when '.png'    then ::RugularAssets.delete_image(file)
+                  when '.jpg'    then ::RugularAssets.delete_image(file)
+                  when '.ttf'    then ::RugularAssets.delete_font(file)
+                  when '.woff'   then ::RugularAssets.delete_font(file)
+                  when '.yaml'
+                    then fail 'what are you doing? trying to break rugular?!'
+                  else next 'Rugular does not know how to handle this file'
+                  end
 
         ::RugularIndexHtml.update_javascript_script_tags
 

@@ -57,7 +57,7 @@ A new Rugular project contains the following folders:
 | node_modules | A folder used by npm to install packages. |
 | package.json | A list of packages to be installed by npm |
 | src | A folder containing the source code unique to a rugular application.  Rugular apps are written in Haml, Coffeescript and Sass and designed to follow [Google's Best Practices for an Angular App Structure](https://docs.google.com/document/d/1XXMvReO8-Awi1EZXAXS4PzDzdNvV6pGcuaF4Q9821Es/pub).  |
-| src/fonts and src/images | Folders to place fonts and images respectively, in a rugular application they are referenced by their relative filename, e.g.  ``src/images/logo.png`` can be linked as ``<img src='logo.png'></img>``
+| src/fonts and src/images | Folders to place fonts and images respectively, in a rugular application they are referenced by their relative filename, e.g.  ``src/images/logo.png`` can be linked as ``<img src='images/logo.png'></img>``
 | vendor | 3rd-party javascript, coffeescript, css, and sass files that do not come with bower management. All of these files are included before any code in src. |
 
 ### Rugular Generators
