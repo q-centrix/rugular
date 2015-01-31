@@ -38,5 +38,11 @@ module Rugular
       'build an angular directive'
     )
 
+    register(
+      Rugular::Filter,
+      'filter',
+      'filter',
+      'build an angular filter'
+    )
   end
 end
