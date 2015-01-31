@@ -1,0 +1,10 @@
+describe '<%= name %>', ->
+  subject = <%= name %>
+
+  context 'given anything', ->
+    aRandomArray = [
+      '1'
+      '2'
+    ]
+
+    expect(subject(aRandomArray)).to.eql []

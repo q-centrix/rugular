@@ -33,19 +33,12 @@ class RugularIndexHtml
   end
 
   def javascript_files
-    Dir.glob("src/{components,app}/**/*.module.coffee").sort(&reverse_nested) +
-      Dir.glob("src/{components,app}/**/*.routes.coffee").sort(&reverse_nested) +
-      Dir.glob("src/{components,app}/**/*.factory.coffee").sort(&reverse_nested) +
-      Dir.glob("src/{components,app}/**/*.filter.coffee").sort(&reverse_nested) +
-      Dir.glob("src/{components,app}/**/*.animation.coffee").sort(&reverse_nested) +
-      Dir.glob("src/{components,app}/**/*.controller.coffee").sort(&reverse_nested) +
-      Dir.glob("src/{components,app}/**/*.directive.coffee").sort(&reverse_nested)
-  end
-
-  def reverse_nested
-    lambda do |x, y|
-      x.scan('/').length <=> y.scan('/').length
-    end
+    Dir.glob("src/{components,app}/**/*.module.coffee") +
+      Dir.glob("src/{components,app}/**/*.routes.coffee") +
+      Dir.glob("src/{components,app}/**/*.factory.coffee") +
+      Dir.glob("src/{components,app}/**/*.filter.coffee") +
+      Dir.glob("src/{components,app}/**/*.controller.coffee") +
+      Dir.glob("src/{components,app}/**/*.directive.coffee")
   end
 
   def convert_to_script_tag
