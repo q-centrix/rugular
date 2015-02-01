@@ -27,6 +27,5 @@ Feature: Rugular CLI
       %link(href='application.css', media='screen', rel='stylesheet')
       """
     And a directory named "my-app/src/components" should exist
-    And a file named "my-app/src/application.sass" should exist
     And the output should contain "Thank you for installing Rugular"
 

@@ -32,10 +32,6 @@ Feature: Rugular CLI
       ]
       """
     And a file named "my-app/src/app/test/_test.sass" should exist
-    And the file "my-app/src/application.sass" should contain:
-      """
-      @import 'app/test'
-      """
 
   Scenario: Generating a route in the components directory
     When I set up Rugular and run "rugular generate route -c test"
