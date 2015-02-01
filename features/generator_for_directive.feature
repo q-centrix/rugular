@@ -7,7 +7,7 @@ Feature: Rugular CLI
     When I set up Rugular and run "rugular generate directive test"
     And the file "my-app/src/app/test/test.directive.coffee" should contain:
       """
-      angular.module('test').controller('testController', testController)
+      angular.module('test').directive('test', test)
       """
     And the file "my-app/src/app/test/test.directive.spec.coffee" should contain:
       """
@@ -31,5 +31,5 @@ Feature: Rugular CLI
     When I set up Rugular and run "rugular generate directive -c test"
     And the file "my-app/src/components/test/test.directive.coffee" should contain:
       """
-      angular.module('test').controller('testController', testController)
+      angular.module('test').directive('test', test)
       """

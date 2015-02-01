@@ -1,21 +1,17 @@
-<%= name %>Controller = ->
-  @title = <%= name %>
-  return
-
-<%= name %>Controller.$inject = []
-
-angular.module('<%= name %>').controller('<%= name %>Controller', <%= name %>Controller)
+<%= name %>Helper =
+  title: 'yes'
 
 <%= name %> = ->
-  directive =
+  return {
     controller: <%= name %>Controller
     controllerAs: 'vm'
-    restrict: 'E'
-    templateUrl: "components/<%= name %>/<%= name %>.html"
+    restrict: 'A'
+    templateUrl: 'components/<%= name %>/<%= name %>.html'
     scope:
       number: '='
-
-  return directive
+    link: (scope, element, attrs, controller) ->
+      return
+  }
 
 <%= name %>.$inject = []
 

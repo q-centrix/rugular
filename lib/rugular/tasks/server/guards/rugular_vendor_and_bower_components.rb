@@ -17,8 +17,6 @@ class RugularVendorAndBowerComponents
     end
 
     message = 'Successfully created vendor asset files'
-  rescue StandardError => error
-    handle_error_in_guard(error)
   end
 
   private

@@ -47,13 +47,6 @@ module Rugular
       end
     end
 
-    def add_sass_declaration
-      append_to_file(
-        'src/application.sass',
-        "@import '#{folder.sub('src/', '')}'"
-      ) unless sass_declaration_present?(folder)
-    end
-
     def template_files; []; end
 
     protected
@@ -94,10 +87,6 @@ module Rugular
 
     def module_declaration_present?(module_file)
       File.read(module_file).include? module_declaration
-    end
-
-    def sass_declaration_present?(folder)
-      File.read("src/application.sass").include?  "@import #{folder}"
     end
 
     def nested?

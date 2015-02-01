@@ -132,7 +132,7 @@ rugular generate directive <directive_name>
 rugular generate factory <factory_name>
 ```
 
-#### Create a Filter (TODO)
+#### Create a Filter
 
 ```bash
 rugular generate filter <factory_name>

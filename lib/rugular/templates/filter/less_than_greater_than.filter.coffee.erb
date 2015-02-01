@@ -1,0 +1,9 @@
+<%= name %>FilterHelper = (item_to_be_filtered) ->
+  return []
+
+<%= name %>Filter = ->
+  return <%= name %>FilterHelper(item_to_be_filtered)
+
+<%= name %>Filter.$inject = []
+
+angular.module('<%= name %>').filter('<%= name %>Filter', <%= name %>Filter)
