@@ -8,6 +8,7 @@ module Rugular
   class Build < Thor::Group
     include Thor::Actions
 
+    # This is a really long comment This is a really long comment This is a really long comment This is a really long comment This is a really long comment This is a really long comment
     desc('Creates a minified, compressed version in the dist folder')
 
     Rugular::AppChecker.check_rugular!(self.name, new.destination_root)
