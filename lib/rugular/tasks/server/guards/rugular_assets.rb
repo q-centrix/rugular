@@ -1,19 +1,10 @@
 class RugularAssets
-  def self.copy_image(file)
-    FileUtils.mkdir('.tmp/images') unless File.directory? '.tmp/images'
-    FileUtils.cp(file, ".tmp/images/#{File.basename(file)}")
+  def self.copy_asset(file)
+    FileUtils.mkdir('.tmp/assets') unless File.directory? '.tmp/assets'
+    FileUtils.cp(file, ".tmp/assets/#{File.basename(file)}")
   end
 
-  def self.copy_font(file)
-    FileUtils.mkdir('.tmp/fonts') unless File.directory? '.tmp/fonts'
-    FileUtils.cp(file, ".tmp/fonts/#{File.basename(file)}")
-  end
-
-  def self.delete_image(file)
-    FileUtils.rm(".tmp/images/#{File.basename(file)}")
-  end
-
-  def self.delete_font(file)
-    FileUtils.rm(".tmp/fonts/#{File.basename(file)}")
+  def self.delete_asset(file)
+    FileUtils.rm(".tmp/assets/#{File.basename(file)}")
   end
 end

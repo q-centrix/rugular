@@ -10,7 +10,9 @@ module Rugular
 
     desc('Creates a minified, compressed version in the dist folder')
 
-    Rugular::AppChecker.check_rugular!(self.name, new.destination_root)
+    def check_for_rugular_directory
+      Rugular::AppChecker.check_rugular!(self.name, new.destination_root)
+    end
 
     def create_dist_folder
       FileUtils.mkdir_p('./dist') unless File.directory? './dist'
@@ -56,6 +58,14 @@ module Rugular
           f.read.gsub(html_filename, html)
         end)
       end
+    end
+
+    def inject_backend_urls
+      Rugular::BackendURLInjector.inject_urls(
+        config_file: 'config.yaml',
+        constant_file: 'dist/application.js',
+        environment: :production
+      )
     end
 
     def add_template_application_sass_file

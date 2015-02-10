@@ -6,7 +6,13 @@ module Rugular
 
     desc('Installs dependencies (bundle, bower and npm)')
 
-    Rugular::AppChecker.check_rugular!(self.name, new.destination_root)
+    def self.exit_on_failue?; true end
+    def check_for_rugular_directory
+      ::Rugular::AppChecker.check_for_rugular_directory(
+        task_name: self.class.name,
+        root_directory: destination_root
+      )
+    end
 
     def bundle
       puts 'Installing Ruby gems'
@@ -19,6 +25,7 @@ module Rugular
     end
 
     def npm_install
+      puts 'Installing node packages'
       system('npm install')
     end
 

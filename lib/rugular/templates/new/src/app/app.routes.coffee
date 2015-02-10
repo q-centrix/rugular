@@ -3,7 +3,7 @@ AppRouting = ($stateProvider, $urlRouterProvider) ->
 
   $stateProvider.state 'root',
     url: '/'
-    templateUrl: "app/app.html"
+    templateUrl: 'app/app.html'
     controller: 'AppController'
     controllerAs: 'app'
 

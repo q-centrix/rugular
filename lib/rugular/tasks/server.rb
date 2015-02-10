@@ -5,7 +5,13 @@ module Rugular
   class Server < Thor::Group
     include Thor::Actions
 
-    Rugular::AppChecker.check_rugular!(self.name, new.destination_root)
+    def self.exit_on_failue?; true end
+    def check_for_rugular_directory
+      ::Rugular::AppChecker.check_for_rugular_directory(
+        task_name: self.class.name,
+        root_directory: destination_root
+      )
+    end
 
     desc(
       "runs the test suite and a dev server on localhost:8080 "\

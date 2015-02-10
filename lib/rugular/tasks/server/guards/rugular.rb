@@ -29,10 +29,10 @@ module Guard
                   when '.coffee' then ::RugularCoffee.compile(file)
                   when '.haml'   then ::RugularHaml.compile(file)
                   when '.yaml'   then ::RugularVendorAndBowerComponents.compile
-                  when '.png'    then ::RugularAssets.copy_image(file)
-                  when '.jpg'    then ::RugularAssets.copy_image(file)
-                  when '.ttf'    then ::RugularAssets.copy_font(file)
-                  when '.woff'   then ::RugularAssets.copy_font(file)
+                  when '.png'    then ::RugularAssets.copy_asset(file)
+                  when '.jpg'    then ::RugularAssets.copy_asset(file)
+                  when '.ttf'    then ::RugularAssets.copy_asset(file)
+                  when '.woff'   then ::RugularAssets.copy_asset(file)
                   else next 'Rugular does not know how to handle this file'
                   end
 
@@ -51,10 +51,10 @@ module Guard
         message = case File.extname(file)
                   when '.coffee' then ::RugularCoffee.delete(file)
                   when '.haml'   then ::RugularHaml.delete(file)
-                  when '.png'    then ::RugularAssets.delete_image(file)
-                  when '.jpg'    then ::RugularAssets.delete_image(file)
-                  when '.ttf'    then ::RugularAssets.delete_font(file)
-                  when '.woff'   then ::RugularAssets.delete_font(file)
+                  when '.png'    then ::RugularAssets.delete_asset(file)
+                  when '.jpg'    then ::RugularAssets.delete_asset(file)
+                  when '.ttf'    then ::RugularAssets.delete_asset(file)
+                  when '.woff'   then ::RugularAssets.delete_asset(file)
                   when '.yaml'
                     then fail 'what are you doing? trying to break rugular?!'
                   else next 'Rugular does not know how to handle this file'
