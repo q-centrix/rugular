@@ -1,0 +1,9 @@
+bower_components:
+  css:
+    - 'font-awesome/css/font-awesome.min.css'
+  js:
+    - 'angular/angular.js'
+    - 'angular-ui-router/release/angular-ui-router.js'
+vendor:
+  coffee:
+    - 'jquery/jquery.minical.js.coffee'

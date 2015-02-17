@@ -6,24 +6,24 @@ module Rugular
     register(New, 'new', 'new', 'create a new Rugular project')
 
     register(
-      Dependencies,
-      'dependencies',
-      'dependencies',
-      'install project dependencies'
-    )
-
-    register(
-      Server,
-      'server',
-      'server',
-      'start the Rugular server'
-    )
-
-    register(
       Build,
       'build',
       'build',
       'build the Rugular distribution'
+    )
+
+    register(
+      ContinuousIntegration,
+      'ci',
+      'ci',
+      'run the Rugular tests once for CI'
+    )
+
+    register(
+      Dependencies,
+      'dependencies',
+      'dependencies',
+      'install project dependencies'
     )
 
     register(
@@ -34,10 +34,17 @@ module Rugular
     )
 
     register(
-      ContinuousIntegration,
-      'ci',
-      'ci',
-      'run the Rugular tests once for CI'
+      Server,
+      'server',
+      'server',
+      'start the Rugular server'
+    )
+
+    register(
+      Tmux,
+      'tmux',
+      'tmux',
+      'start a rugular tmux session'
     )
   end
 end

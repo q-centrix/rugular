@@ -4,7 +4,13 @@ module Rugular
   class Generate < Thor
     include Thor::Actions
 
-    Rugular::AppChecker.check_rugular!(self.name, new.destination_root)
+    def self.exit_on_failue?; true end
+    def check_for_rugular_directory
+      ::Rugular::AppChecker.check_for_rugular_directory(
+        task_name: self.class.name,
+        root_directory: destination_root
+      )
+    end
 
     desc(
       'generate <angular_service> <name>',
@@ -43,6 +49,13 @@ module Rugular
       'filter',
       'filter',
       'build an angular filter'
+    )
+
+    register(
+      Rugular::Factory,
+      'factory',
+      'factory',
+      'build an angular factory'
     )
   end
 end

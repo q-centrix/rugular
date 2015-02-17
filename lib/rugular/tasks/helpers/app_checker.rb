@@ -2,8 +2,11 @@ module Rugular
   class AppChecker
     include Thor::Shell
 
-    def self.check_rugular!(task_name, root_directory)
-      new(task_name: task_name, root_directory: root_directory).check_rugular!
+    def self.check_for_rugular_directory(task_name:, root_directory:)
+      new(
+        task_name: task_name,
+        root_directory: root_directory
+      ).check_for_rugular_directory
     end
 
     def initialize(task_name:, root_directory:)
@@ -11,8 +14,10 @@ module Rugular
       @root_directory = root_directory
     end
 
-    def check_rugular!
-      error(rugular_app_message) unless rugular_app?
+    def check_for_rugular_directory
+      fail(rugular_app_message) unless rugular_app?
+
+      return true
     end
 
     private
@@ -20,7 +25,7 @@ module Rugular
     attr_reader :task_name, :root_directory
 
     def rugular_app_message
-      "#{task_name} requires a pre-existing Rugular application"
+      "#{task_name} can only be ran in the root folder of a Rugular app"
     end
 
     def rugular_app?

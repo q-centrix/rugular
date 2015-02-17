@@ -24,7 +24,7 @@ Feature: Rugular CLI
       """
     And the file "my-app/src/index.haml" should contain:
       """
-      %link(href='application.css', media='screen', rel='stylesheet')
+      %title my-app
       """
     And a directory named "my-app/src/components" should exist
     And the output should contain "Thank you for installing Rugular"

@@ -17,10 +17,10 @@ module Rugular
     end
 
     def create_custom_files
-      Dir.glob("#{lib_directory}/templates/new_erb/*.erb").each do |file_name|
-        pathname = Pathname.new(file_name)
+      template_file_names.each do |(file_name, template_file_name)|
+        create_file "#{app_name}/#{template_file_name.gsub('.erb', '')}" do
+          pathname = Pathname.new(file_name)
 
-        create_file "#{app_name}/#{pathname.basename('.erb').to_s}" do
           ERB.new(pathname.read).result(
             app_open_struct.instance_eval { binding }
           )
@@ -50,5 +50,15 @@ module Rugular
       __dir__.chomp('/tasks')
     end
 
+    def template_file_names
+      real_file_names = Dir.glob(
+        "#{lib_directory}/templates/new_erb/**/*.erb"
+      )
+      abbreviated_file_names = real_file_names.map do |file_name|
+        file_name.gsub("#{lib_directory}/templates/new_erb/", '')
+      end
+
+      real_file_names.zip(abbreviated_file_names)
+    end
   end
 end

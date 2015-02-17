@@ -1,0 +1,13 @@
+# Config for the rugular server command
+development:
+  backend:
+    authentication_url: 'http://127.0.0.1:3000'
+    authorization_url: 'http://127.0.0.1:4000'
+    api_url: 'http://127.0.0.1:5000'
+
+# Config for the rugular build command
+production:
+  backend:
+    authentication_url: <%= ENV['RUGULAR_AUTHENTICATION_SERVER'] %>
+    authorization_url: <%= ENV['RUGULAR_AUTHORIZATION_SERVER'] %>
+    api_url: <%= ENV['RUGULAR_API_SERVER'] %>

@@ -44,6 +44,6 @@ class RugularVendorAndBowerComponents
   end
 
   def bower_yaml
-    YAML.load(File.read('src/vendor_and_bower_components.yaml'))
+    YAML.load(File.read('vendor_and_bower_components.yaml'))
   end
 end
