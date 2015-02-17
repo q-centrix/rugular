@@ -32,12 +32,18 @@ module Rugular
       empty_directory "#{app_name}/src/components"
     end
 
+    def create_vendor_directory
+      empty_directory "#{app_name}/vendor"
+    end
+
+    def install_bourbon
+      run "cd #{app_name}/vendor && bourbon install "\
+        '&& neat install && bitters install'
+    end
+
     def installation_complete
-      puts "Thank you for installing Rugular, please finish setting up your "\
-        "project with: `cd #{app_open_struct.name} && bundle install && "\
-        "rugular dependencies`\n"\
-        "Please install bourbon and neat by bundle exec bourbon install "\
-        "--path src/ and neat with bundle exec neat install --path src/"
+      puts 'Thank you for installing Rugular, please finish setting up your '\
+        "project with: `cd #{app_open_struct.name} && rugular dependencies`\n"
     end
 
     private

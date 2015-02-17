@@ -133,6 +133,26 @@ production. The ``config.yaml`` file contains defaults for ``localhost:3000``
 for a local server and a ``RUGULAR_SERVER`` environment variable that can be
 injected during a deployment script, e.g. a Dockerfile.
 
+### Writing Sass
+
+Rugular ships with Thoughtbot's [Bourbon, Neat, and
+Bitters](http://bourbon.io/).  These are included in the ``src/vendor``
+directory and included in ``.application.sass``, the manifest sass file that
+will be compiled in both the ``.tmp`` directory and ``dist`` directory for the
+``rugular server`` and ``rugular build`` commands separately.
+
+All files in the ``src`` directory are included via [the sass-globbing
+gem](https://github.com/chriseppstein/sass-globbing). It is recommended that
+each sass file start with a top level class so that the sass files can be
+included irrespective of their order. For example a sass file for a header
+directive should look like:
+
+```sass
+.header
+  > h1
+    color: red
+```
+
 ## Rugular Generators
 
 Rugular generators assist with developing apps by creating template files in
