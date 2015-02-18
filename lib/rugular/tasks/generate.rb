@@ -4,14 +4,6 @@ module Rugular
   class Generate < Thor
     include Thor::Actions
 
-    def self.exit_on_failue?; true end
-    def check_for_rugular_directory
-      ::Rugular::AppChecker.check_for_rugular_directory(
-        task_name: self.class.name,
-        root_directory: destination_root
-      )
-    end
-
     desc(
       'generate <angular_service> <name>',
       'generates an angular service'
@@ -29,6 +21,14 @@ module Rugular
       The name that is passed in is the name of the angular service. The
       command will also create an angular module if one does not already exist.
     LONGDESC
+
+    def check_for_rugular_directory
+      ::Rugular::AppChecker.check_for_rugular_directory(
+        task_name: self.class.name,
+        root_directory: destination_root
+      )
+    end
+
 
     register(
       Rugular::Route,

@@ -32,9 +32,8 @@ module Rugular
       [
         'bower.json',
         'package.json',
-        'src/index.haml',
         'Gemfile',
-        '.tmp'
+        'src/index.haml'
       ].each do |file_name|
         destination_file_name = root_directory + '/' + file_name
 
