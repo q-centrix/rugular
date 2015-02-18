@@ -65,7 +65,7 @@ A new Rugular project contains the following folders and files:
 
 | Folder/File Name | Description |
 | --- | --- |
-| .application.sass | A manifest sass file for development purposes, you do not need to edit this file. |
+| .application.sass | A manifest sass file for development purposes. [Declare vendor sass if needed, the rest is included for you](#writing-sass) |
 | .gitignore | Many of the files and folders here are not needed for source control, when deploying an application, please use the ``rugular build`` command described below |
 | .tmp | A temporary folder used for storing compiled Haml, Sass, and Coffeescript file, you do not need to edit any files in this folder. |
 | bower_components | A folder used by bower to install packages. |
@@ -89,8 +89,7 @@ bower_components or other 3rd party vendor files are declared in the
 Code in the src folder are written in Coffeescript, Haml and Sass and designed
 to follow [Google's Best Practices for an Angular App
 Structure](https://docs.google.com/document/d/1XXMvReO8-Awi1EZXAXS4PzDzdNvV6pGcuaF4Q9821Es/pub).
-The ``rugular new`` command creates an initial folder setup with an ``src/app``
-folder and an ``src/components`` folder.
+Rugular initially creates a ``src/app`` folder for logic pertaining to urls and an ``src/components`` folder for abstracted web components, written as Angular directives.
 
 ### The src/app folder
 
@@ -102,13 +101,12 @@ Any modules that are created within one level of nesting in the ``src/app``
 folder (e.g. ``src/app/dashboard/dashboard.module.coffee``) are to be included
 in the ``app.module.coffee`` declaration.
 
-The ``src/app/app.routes.coffee`` file declares a base route for the
-application from which all other routes are derived from. As such, it is
-advised to prepend all other routes with ``'root.'``.
+The ``src/app/app.routes.coffee`` file declares a base route, ``root`` for the
+application from which all other routes are derived from; all other routes 
+should be prepended with ``'root.'``.
 
-Because the ``app.routes.coffee`` file declares a base route, the
-``src/app/app.haml`` file serves as an application layout for the rest of your
-application. If you have directives such as a ``navbar`` or ``footer``
+The``src/app/app.haml`` file serves as an application layout for the rest of 
+your application. If you have directives such as a ``navbar`` or ``footer``
 directive, it is advised to add these directives to this ``haml`` file.
 
 ### The src/components folder
@@ -133,7 +131,7 @@ production. The ``config.yaml`` file contains defaults for ``localhost:3000``
 for a local server and a ``RUGULAR_SERVER`` environment variable that can be
 injected during a deployment script, e.g. a Dockerfile.
 
-### Writing Sass
+### Writing Sass and Haml
 
 Rugular ships with Thoughtbot's [Bourbon, Neat, and
 Bitters](http://bourbon.io/).  These are included in the ``src/vendor``
@@ -152,6 +150,9 @@ directive should look like:
   > h1
     color: red
 ```
+
+Haml files should also start with a top-level class that has the same name
+of its folder.
 
 ## Rugular Generators
 
@@ -230,6 +231,9 @@ src/app/navbar.directive.coffee
 src/app/navbar.haml
 src/app/navbar.module.coffee
 ```
+
+> This will be re-written as a component in Angular 2.0.
+> (and it will be awesome!)
 
 #### Create a Factory
 
@@ -312,7 +316,7 @@ rugular ci
 
 ## Building the app
 
-To build a minified version of your app in the ``/dist`` folder execute:
+To build a minified version of your app in the ``dist`` folder execute:
 
 ```bash
 rugular build
@@ -326,8 +330,13 @@ This will create the following files:
 * application.js (a minified version of the coffee files in the src folder)
 * vendor.js (a minified version of bower_component and vendor files)
 
-
 ## Roadmap
+
+Features coming soon:
+
+* Abstracting bower components from a folder and its subfolders
+* Fingerprinting dist asset files for caching
+* Nginx based docker container for deploying apps
 
 As soon as it reaches a stable release:
 
