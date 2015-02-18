@@ -65,7 +65,7 @@ A new Rugular project contains the following folders and files:
 
 | Folder/File Name | Description |
 | --- | --- |
-| .application.sass | A manifest sass file for development purposes. [Declare vendor sass if needed, the rest is included for you](#writing-sass) |
+| .application.sass | A manifest sass file for development purposes. [Declare vendor sass if needed, the rest is included for you](#writing-sass-and-haml). |
 | .gitignore | Many of the files and folders here are not needed for source control, when deploying an application, please use the ``rugular build`` command described below |
 | .tmp | A temporary folder used for storing compiled Haml, Sass, and Coffeescript file, you do not need to edit any files in this folder. |
 | bower_components | A folder used by bower to install packages. |
