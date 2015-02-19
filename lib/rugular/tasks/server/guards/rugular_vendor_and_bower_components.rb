@@ -29,12 +29,16 @@ class RugularVendorAndBowerComponents
 
   def bower_css
     bower_yaml.fetch('bower_components').fetch('css').map do |filename|
+      bower_component_file = 'bower_components/' + filename
+      next unless File.file? bower_component_file
       File.read('bower_components/' + filename)
     end.join
   end
 
   def bower_javascript
     bower_yaml.fetch('bower_components').fetch('js').map do |filename|
+      bower_component_file = 'bower_components/' + filename
+      next unless File.file? bower_component_file
       File.read('bower_components/' + filename)
     end.join
   end
