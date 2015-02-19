@@ -1,8 +1,6 @@
  name: rugular
  root: .
 
- pre: git fetch origin --prune; bundle exec rugular dependencies
-
  windows:
    - vim:     vim .
    - console: git status
