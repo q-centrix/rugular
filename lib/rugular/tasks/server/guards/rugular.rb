@@ -13,7 +13,7 @@ module Guard
     end
 
     def start
-      run_on_changes('src/index.haml')
+      run_all
     end
 
     def stop; true end
