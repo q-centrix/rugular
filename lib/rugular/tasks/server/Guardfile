@@ -2,5 +2,5 @@ require "#{__dir__}/guards/rugular.rb"
 
 guard :rugular do
   watch /^src\/.+\.[^sass]/
-  watch /^vendor_and_bower_components.yaml/
+  watch 'vendor_and_bower_components.yaml'
 end

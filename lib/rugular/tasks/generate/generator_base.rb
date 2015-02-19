@@ -47,14 +47,6 @@ module Rugular
       end
     end
 
-    def inject_backend_urls
-      Rugular::BackendURLInjector.inject_urls(
-        config_file: 'config.yaml',
-        constant_file: '.tmp/backend.constant.js',
-        environment: :development
-      )
-    end
-
     def template_files; []; end
 
     protected

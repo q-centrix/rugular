@@ -9,6 +9,8 @@ class RugularVendorAndBowerComponents
   def initialize; end
 
   def compile
+    ::Guard::UI.info 'Beginning to create vendor asset files'
+
     File.open('.tmp/vendor.css', 'w') do |file|
       file.write bower_css
     end
@@ -16,7 +18,7 @@ class RugularVendorAndBowerComponents
       file.write(Uglifier.compile(bower_and_vendor_javascript))
     end
 
-    message = 'Successfully created vendor asset files'
+    'Successfully created vendor asset files'
   end
 
   private
@@ -38,7 +40,15 @@ class RugularVendorAndBowerComponents
   end
 
   def vendor_javascript
+    bower_yaml.fetch('vendor').fetch('javascript').map do |filename|
+      vendor_file = 'vendor/' + filename
+      next unless File.file? vendor_file
+      File.read(vendor_file)
+    end.join +
+
     bower_yaml.fetch('vendor').fetch('coffee').map do |filename|
+      vendor_file = 'vendor/' + filename
+      next unless File.file? vendor_file
       CoffeeScript.compile(File.read('vendor/' + filename))
     end.join
   end

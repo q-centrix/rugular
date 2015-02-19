@@ -2,6 +2,14 @@
 %html{'ng-app' => 'app'}
   %head
     %title <%= name %>
+
+    %link(href='vendor.css' media='screen' rel='stylesheet')
+    %link(href='application.css' media='screen' rel='stylesheet')
     -# You do not need to add link or script tags. Rugular will do that for you.
   %body
     %ui-view
+
+    %script(src='vendor.js')
+
+    .application_javascript
+      %script(src='application.js')
