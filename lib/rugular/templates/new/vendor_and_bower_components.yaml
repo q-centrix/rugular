@@ -6,4 +6,6 @@ bower_components:
     - 'angular-ui-router/release/angular-ui-router.js'
 vendor:
   coffee:
+    - 'some coffee script file'
   javascript:
+    - 'some javascript file'
