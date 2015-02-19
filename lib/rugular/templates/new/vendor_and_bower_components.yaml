@@ -6,4 +6,4 @@ bower_components:
     - 'angular-ui-router/release/angular-ui-router.js'
 vendor:
   coffee:
-    - 'jquery/jquery.minical.js.coffee'
+  javascript:

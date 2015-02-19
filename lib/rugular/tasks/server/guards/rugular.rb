@@ -20,7 +20,9 @@ module Guard
     def reload; true end
 
     def run_all
-      run_on_changes(Dir.glob("src/**/*"))
+      run_on_changes(
+        Dir.glob('src/**/*').unshift('vendor_and_bower_components.yaml')
+      )
     end
 
     def run_on_changes(paths)
