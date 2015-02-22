@@ -1,4 +1,5 @@
 require 'nokogiri'
+require_relative '../../helpers/javascript_files'
 
 class RugularIndexHtml
   def self.update_javascript_script_tags
@@ -28,23 +29,8 @@ class RugularIndexHtml
   def javascript_file_script_tags
     Nokogiri::XML::NodeSet.new(
       application_html,
-      javascript_files.map(&convert_to_script_tag)
+      Rugular::JavascriptFiles.ordered_array.map(&convert_to_script_tag)
     )
-  end
-
-  def javascript_files
-    Dir.glob("src/components/**/*.module.coffee") +
-      Dir.glob("src/components/**/*.factory.coffee") +
-      Dir.glob("src/components/**/*.filter.coffee") +
-      Dir.glob("src/components/**/*.controller.coffee") +
-      Dir.glob("src/components/**/*.directive.coffee") +
-      Dir.glob("src/components/**/*.routes.coffee") +
-      Dir.glob("src/app/**/*.module.coffee") +
-      Dir.glob("src/app/**/*.factory.coffee") +
-      Dir.glob("src/app/**/*.filter.coffee") +
-      Dir.glob("src/app/**/*.controller.coffee") +
-      Dir.glob("src/app/**/*.directive.coffee") +
-      Dir.glob("src/app/**/*.routes.coffee")
   end
 
   def convert_to_script_tag

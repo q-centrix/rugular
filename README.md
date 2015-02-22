@@ -60,7 +60,7 @@ A new Rugular project contains the following folders and files:
 │   ├──  components/
 │   ├──  favico.ico
 ├──  vendor/
-├──  vendor_and_bower_components.yaml
+├──  bower_components.yaml
 </pre>
 
 | Folder/File Name | Description |
@@ -78,13 +78,13 @@ A new Rugular project contains the following folders and files:
 | src/components | A folder for isolate-scope directives to be used in your application code. This folder is also described in [How to Write Rugular apps](#how-to-write-rugular-apps). |
 | src/assets | A folder to place assets, including but not limited to, ``.png``, ``.woff``, ``.svg``, ``.pdf``. All files placed in the assets folder can be linked by their relative filename, e.g.  ``src/assets/logo.png`` can be linked as ``<img src='assets/logo.png'></img>``
 | vendor | 3rd-party javascript, coffeescript, css, and sass files that do not come with bower management. All of these files are included before any code in src. |
-| vendor_and_bower_components.yaml | A file to declare what third party files in the bower_components and vendor folder you would like to include. |
+| bower_components.yaml | A file to declare what third party files in the bower_components and vendor folder you would like to include. |
 
 ## How to Write Rugular Apps
 
 Application specific code lies in the ``src`` folder. Other files, such as
 bower_components or other 3rd party vendor files are declared in the
-``vendor_and_bower_components.yaml`` file.
+``bower_components.yaml`` file.
 
 Code in the src folder are written in Coffeescript, Haml and Sass and designed
 to follow [Google's Best Practices for an Angular App
@@ -102,10 +102,10 @@ folder (e.g. ``src/app/dashboard/dashboard.module.coffee``) are to be included
 in the ``app.module.coffee`` declaration.
 
 The ``src/app/app.routes.coffee`` file declares a base route, ``root`` for the
-application from which all other routes are derived from; all other routes 
+application from which all other routes are derived from; all other routes
 should be prepended with ``'root.'``.
 
-The``src/app/app.haml`` file serves as an application layout for the rest of 
+The``src/app/app.haml`` file serves as an application layout for the rest of
 your application. If you have directives such as a ``navbar`` or ``footer``
 directive, it is advised to add these directives to this ``haml`` file.
 
