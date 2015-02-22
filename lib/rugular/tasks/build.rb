@@ -40,8 +40,8 @@ module Rugular
       File.open('dist/application.js', 'w') do |file|
         file.write(
           Uglifier.compile(
-            javascript_files.map do |file|
-              text = File.read(file).gsub('templateUrl', 'template')
+            Rugular::JavascriptFiles.map do |javascript_file|
+              text = File.read(javascript_file).gsub('templateUrl', 'template')
               CoffeeScript.compile(text)
             end.join
           )
@@ -105,21 +105,6 @@ module Rugular
       end.join
     end
 
-    def javascript_files
-      Dir.glob("src/components/**/*.module.coffee") +
-        Dir.glob("src/components/**/*.factory.coffee") +
-        Dir.glob("src/components/**/*.filter.coffee") +
-        Dir.glob("src/components/**/*.controller.coffee") +
-        Dir.glob("src/components/**/*.directive.coffee") +
-        Dir.glob("src/components/**/*.routes.coffee") +
-        Dir.glob("src/app/**/*.module.coffee") +
-        Dir.glob("src/app/**/*.factory.coffee") +
-        Dir.glob("src/app/**/*.filter.coffee") +
-        Dir.glob("src/app/**/*.controller.coffee") +
-        Dir.glob("src/app/**/*.directive.coffee") +
-        Dir.glob("src/app/**/*.routes.coffee")
-    end
-
     def bower_css
       bower_yaml.fetch('bower_components').fetch('css').map do |filename|
         File.read('bower_components/' + filename)
@@ -128,7 +113,7 @@ module Rugular
 
 
     def bower_yaml
-      YAML.load(File.read('src/vendor_and_bower_components.yaml'))
+      YAML.load(File.read('src/bower_components.yaml'))
     end
 
     def lib_directory
