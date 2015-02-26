@@ -15,17 +15,26 @@ module Rugular
     end
 
     def bundle
-      puts 'Installing Ruby gems'
+      puts <<-GEM_MESSAGE
+       ~~~~~~~~*\o/~~~~~/\*~~~~~~~
+          Installing Ruby gems
+      GEM_MESSAGE
       system('bundle install')
     end
 
     def bower
-      puts 'Installing bower packages'
+      puts <<-BOWER_MESSAGE
+      ~~~~~~~~*\o/~~~~~/\*~~~~~~~
+      Installing bower components
+      BOWER_MESSAGE
       system('bower install')
     end
 
     def npm_install
-      puts 'Installing node packages'
+      puts <<-NODE_MESSAGE
+      ~~~~~~~~*\o/~~~~~/\*~~~~~~~
+      Installing node packages
+      NODE_MESSAGE
       system('npm install')
     end
 
