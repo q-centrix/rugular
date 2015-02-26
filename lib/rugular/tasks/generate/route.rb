@@ -7,5 +7,8 @@ module Rugular
       Dir.glob("#{lib_directory}/templates/route/*.erb")
     end
 
+    def app_or_component
+      'app'
+    end
   end
 end

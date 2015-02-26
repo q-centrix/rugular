@@ -33,13 +33,6 @@ Feature: Rugular CLI
       """
     And a file named "my-app/src/app/test/_test.sass" should exist
 
-  Scenario: Generating a route in the components directory
-    When I set up Rugular and run "rugular generate route -c test"
-    Then the file "my-app/src/components/test/test.controller.coffee" should contain:
-      """
-      angular.module('test').controller('testController', testController)
-      """
-
   Scenario: Generating a multiple word route
     When I set up Rugular and run "rugular generate route credit_card"
     Then the file "my-app/src/app/credit_card/credit_card.controller.coffee" should contain:

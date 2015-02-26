@@ -46,5 +46,12 @@ module Rugular
       'tmux',
       'start a rugular tmux session'
     )
+
+    register(
+      Abstract,
+      'abstract',
+      'abstract',
+      'abstract a bower component to the "~/bower_components" directory'
+    )
   end
 end

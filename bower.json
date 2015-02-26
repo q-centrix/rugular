@@ -1,0 +1,24 @@
+{
+  "name": "rar",
+  "version": "0.0.0",
+  "authors": [
+    "Nicholas Shook <nshook@q-centrix.com>"
+  ],
+  "description": "yes",
+  "main": "okay.js",
+  "moduleType": [
+    "es6"
+  ],
+  "keywords": [
+    "yes"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

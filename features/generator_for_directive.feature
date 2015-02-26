@@ -5,15 +5,15 @@ Feature: Rugular CLI
 
   Scenario: Generating a route
     When I set up Rugular and run "rugular generate directive test"
-    And the file "my-app/src/app/test/test.directive.coffee" should contain:
+    Then the file "my-app/src/components/test/test.directive.coffee" should contain:
       """
       angular.module('test').directive('test', test)
       """
-    And the file "my-app/src/app/test/test.directive.spec.coffee" should contain:
+    And the file "my-app/src/components/test/test.directive.spec.coffee" should contain:
       """
       describe 'testController', ->
       """
-    And the file "my-app/src/app/test/test.haml" should contain:
+    And the file "my-app/src/components/test/test.haml" should contain:
       """
       %h1 test
       """
@@ -21,15 +21,8 @@ Feature: Rugular CLI
       """
       'test'
       """
-    And the file "my-app/src/app/test/test.module.coffee" should contain:
+    And the file "my-app/src/components/test/test.module.coffee" should contain:
       """
       angular.module 'test', [
       ]
-      """
-
-  Scenario: Generating a route in the components directory
-    When I set up Rugular and run "rugular generate directive -c test"
-    And the file "my-app/src/components/test/test.directive.coffee" should contain:
-      """
-      angular.module('test').directive('test', test)
       """
