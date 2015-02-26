@@ -18,13 +18,6 @@ module Rugular
       "(set in lib/rugular/tasks/server/Procfile)"
     )
 
-    def add_template_application_sass_file
-      FileUtils.cp(
-        "#{lib_directory}/templates/server/application.sass",
-        "#{destination_root}/.application.sass"
-      )
-    end
-
     def start_server
       system(
         "bundle exec foreman start --color --root=#{destination_root} " \
