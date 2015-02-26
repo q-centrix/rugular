@@ -8,7 +8,7 @@ module Rugular
         Dir.glob('src/components/**/*.controller.coffee') +
         Dir.glob('src/components/**/*.directive.coffee') +
         Dir.glob('src/app/**/*.module.coffee') +
-        Dir.glob('src/app/**/*.config.coffee')
+        Dir.glob('src/app/**/*.config.coffee') +
         Dir.glob('src/app/**/*.constant.coffee') +
         Dir.glob('src/app/**/*.controller.coffee') +
         Dir.glob('src/app/**/*.routes.coffee')
