@@ -1,9 +1,10 @@
 require 'guard'
-require_relative 'rugular_haml'
-require_relative 'rugular_coffee'
-require_relative 'rugular_bower_components'
-require_relative 'rugular_index_html'
 require_relative 'rugular_assets'
+require_relative 'rugular_bower_components'
+require_relative 'rugular_coffee'
+require_relative 'rugular_es6'
+require_relative 'rugular_haml'
+require_relative 'rugular_index_html'
 
 module Guard
   class Rugular < Plugin
@@ -31,6 +32,7 @@ module Guard
       [*paths].each do |file|
         message =
           case File.extname(file)
+          when '.es6'    then ::RugularES6.compile(file)
           when '.coffee' then ::RugularCoffee.compile(file)
           when '.haml'   then ::RugularHaml.compile(file)
           when '.yaml'   then ::RugularBowerComponents.compile
@@ -55,10 +57,15 @@ module Guard
 
         message =
           case File.extname(file)
+          when '.es6'    then ::RugularES6.delete(file)
           when '.coffee' then ::RugularCoffee.delete(file)
           when '.haml'   then ::RugularHaml.delete(file)
-          when '.yaml'   then fail 'Please do not delete yaml files'
-          else ::RugularAssets.delete_asset(file)
+          when '.yaml'   then fail "Please restore #{file}"
+          when '.png'    then ::RugularAssets.delete_asset(file)
+          when '.jpg'    then ::RugularAssets.delete_asset(file)
+          when '.ttf'    then ::RugularAssets.delete_asset(file)
+          when '.woff'   then ::RugularAssets.delete_asset(file)
+          else "Rugular does not know how to handle #{file}"
           end
 
         ::RugularIndexHtml.update_javascript_script_tags
