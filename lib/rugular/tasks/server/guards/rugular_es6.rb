@@ -16,7 +16,7 @@ class RugularES6
   def compile
     write_tmp_file
 
-    "Successfully compiled #{es6_file} to html!\n"
+    "Successfully compiled #{es6_file} to js!\n"
   end
 
   def delete
@@ -30,7 +30,7 @@ class RugularES6
   attr_reader :es6_file
 
   def javascript
-    @_javascript ||= Babel::Transpiler.transform File.read(es6_file)
+    Babel::Transpiler.transform File.read(es6_file)
   end
 
   def tmp_file

@@ -35,7 +35,7 @@ class RugularIndexHtml
 
   def convert_to_script_tag
     lambda do |javascript_file|
-      tmp_filename = javascript_file.gsub('src', '').gsub('coffee', 'js')
+      tmp_filename = javascript_file.gsub('src', '').gsub(/coffee|es6/, 'js')
 
       Nokogiri::XML::Node.new 'script', application_html do |node|
         node['src'] = tmp_filename

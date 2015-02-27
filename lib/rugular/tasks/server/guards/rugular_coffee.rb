@@ -16,7 +16,7 @@ class RugularCoffee
   def compile
     write_tmp_file
 
-    "Successfully compiled #{coffee_file} to html!\n"
+    "Successfully compiled #{coffee_file} to js!\n"
   end
 
   def delete
