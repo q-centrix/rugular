@@ -334,7 +334,8 @@ This will create the following files:
 
 Features coming soon:
 
-* Abstracting bower components from a folder and its subfolders
+* Abstracting a bower component from a either the ``components`` folder or both
+  the ``components`` and ``app`` folder as one component.
 * Fingerprinting dist asset files for caching
 * Nginx based docker container for deploying apps
 
@@ -342,7 +343,7 @@ As soon as it reaches a stable release:
 
 * ``angular-ui-router`` will be replaced by the ``router`` re-write by the
   Angular team.
-* Angular 1.3 will be updated to Angular 1.4
+* Angular 1.3 will be updated to Angular 1.4 (then to 1.5)
 
 Post Angular 2.0 changes
 
