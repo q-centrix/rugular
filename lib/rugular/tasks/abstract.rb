@@ -21,10 +21,8 @@ module Rugular
       )
     end
 
-    def ask_for_version
-      @version = ask(
-        "the previous version is #{previous_version}, what is the version now?"
-      )
+    def initialize_or_create_version
+
     end
 
     def file_copy_folder_into_bower_src_folder
