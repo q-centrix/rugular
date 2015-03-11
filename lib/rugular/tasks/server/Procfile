@@ -1,4 +1,4 @@
-web: http-server .tmp
+web: ./node_modules/http-server/bin/http-server .tmp
 guard: bundle exec guard --guardfile=$(bundle show rugular)/lib/rugular/tasks/server/Guardfile
 sass: sass --watch .application.sass:.tmp/application.css -r sass-globbing
 karma: ./node_modules/karma/bin/karma start karma.conf
