@@ -13,6 +13,7 @@ module Rugular
     desc 'creates a new tmux session with the processes necessary for rugular'
 
     def copy_tmux_file
+      FileUtils.mkdir "#{Dir.home}/.tmuxinator"
       FileUtils.cp tmuxinator_file, "#{Dir.home}/.tmuxinator/rugular.yml"
     end
 
