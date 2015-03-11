@@ -1,5 +1,6 @@
 css:
   - 'font-awesome/css/font-awesome.min.css'
 js:
+  - 'jquery/dist/jquery.js'
   - 'angularjs-ie8-build/dist/angular.js'
   - 'angular-ui-router/release/angular-ui-router.js'
