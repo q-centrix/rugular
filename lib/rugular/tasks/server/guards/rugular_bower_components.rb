@@ -1,6 +1,5 @@
 require 'uglifier'
 require 'coffee_script'
-require 'uglifier'
 
 class RugularBowerComponents
   def self.compile
@@ -16,7 +15,7 @@ class RugularBowerComponents
       file.write bower_css
     end
     File.open('.tmp/vendor.js', 'w') do |file|
-      file.write(Uglifier.compile(bower_javascript))
+      file.write bower_javascript
     end
 
     'Successfully created manifest bower files'
@@ -25,22 +24,26 @@ class RugularBowerComponents
   private
 
   def bower_css
-    bower_yaml.fetch('css').map do |filename|
-      bower_component_file = 'bower_components/' + filename
-      next unless File.file? bower_component_file
-      File.read('bower_components/' + filename)
-    end.join
+    bower_yaml.fetch('css').reduce('', &read_bower_component_files)
   end
 
   def bower_javascript
-    bower_yaml.fetch('js').map do |filename|
-      bower_component_file = 'bower_components/' + filename
-      next unless File.file? bower_component_file
-      File.read('bower_components/' + filename)
-    end.join
+    Uglifier.compile(
+      bower_yaml.fetch('js').reduce('', &read_bower_component_files)
+    )
   end
 
   def bower_yaml
     YAML.load(File.read('bower_components.yaml'))
+  end
+
+  def read_bower_component_files
+    lambda do |accumulator, filename|
+      bower_component_file = 'bower_components/' + filename
+
+      fail "#{filename} does not exist" unless File.file? bower_component_file
+
+      accumulator += File.read bower_component_file
+    end
   end
 end

@@ -42,8 +42,14 @@ module Rugular
     end
 
     def installation_complete
-      puts 'Thank you for installing Rugular, please finish setting up your '\
-        "project with: `cd #{app_open_struct.name} && rugular dependencies`\n"
+      puts <<-POST_INSTALL_MESSAGE
+♪┏(°.°)┛┗(°.°)┓┗(°.°)┛┏(°.°)┓┏(°.°)┛┗(°.°)┓┗(°.°)┛┏(°.°)┓♪
+
+Thank you for installing Rugular, please finish setting up your
+project with: `cd #{app_open_struct.name} && rugular dependencies`
+
+♪┏(°.°)┛┗(°.°)┓┗(°.°)┛┏(°.°)┓┏(°.°)┛┗(°.°)┓┗(°.°)┛┏(°.°)┓♪
+      POST_INSTALL_MESSAGE
     end
 
     private

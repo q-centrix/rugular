@@ -29,7 +29,6 @@ module Rugular
       )
     end
 
-
     register(
       Rugular::Route,
       'route',
