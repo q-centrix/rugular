@@ -347,7 +347,7 @@ As soon as it reaches a stable release:
 
 Post Angular 2.0 changes
 
-* replace CoffeeScript with EcmaScript6
+* replace CoffeeScript with Typescript
 * replace the folder structure and build scripts to take advantage of
   EcmaScript 6 modules
 
