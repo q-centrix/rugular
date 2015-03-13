@@ -44,9 +44,11 @@ A new Rugular project contains the following folders and files:
 ├──  .tmp/
 ├──  bower_components/
 ├──  bower.json
+├──  dist/
 ├──  Gemfile
 ├──  node_modules/
 ├──  package.json
+├──  release/
 ├──  src/
 │   ├──  app/
 │   │   ├──  _app.sass
@@ -70,9 +72,11 @@ A new Rugular project contains the following folders and files:
 | .tmp | A temporary folder used for storing compiled Haml, Sass, and Coffeescript file, you do not need to edit any files in this folder. |
 | bower_components | A folder used by bower to install packages. |
 | bower.json | A list of packages to be installed by bower. |
+| dist | A folder that contains production files created by the rugular build command |
 | Gemfile | A way to install the ``rugular`` gem locally. This is not needed if you install ``rugular`` globally. |
 | node_modules | A folder used by npm to install packages. |
 | package.json | A list of packages to be installed by npm. |
+| release | A folder that contains a manifest files to be used as a bower_component |
 | src | A folder containing the source code unique to a rugular application. |
 | src/app | A folder for application code that correlates to the layout of the application and a URL route in the application. A section is detailed below about [How to Write Rugular apps](#how-to-write-rugular-apps). |
 | src/components | A folder for isolate-scope directives to be used in your application code. This folder is also described in [How to Write Rugular apps](#how-to-write-rugular-apps). |
@@ -89,7 +93,9 @@ bower_components or other 3rd party vendor files are declared in the
 Code in the src folder are written in Coffeescript, Haml and Sass and designed
 to follow [Google's Best Practices for an Angular App
 Structure](https://docs.google.com/document/d/1XXMvReO8-Awi1EZXAXS4PzDzdNvV6pGcuaF4Q9821Es/pub).
-Rugular initially creates a ``src/app`` folder for logic pertaining to urls and an ``src/components`` folder for abstracted web components, written as Angular directives.
+Rugular initially creates a ``src/app`` folder for logic pertaining to urls and
+an ``src/components`` folder for abstracted web components, written as Angular
+directives.
 
 ### The src/app folder
 
@@ -232,8 +238,8 @@ src/app/navbar.haml
 src/app/navbar.module.coffee
 ```
 
-> This will be re-written as a component in Angular 2.0.
-> (and it will be awesome!)
+> This will be re-written as a component in Angular 2.0. (and it will be
+> awesome!)
 
 #### Create a Factory
 
@@ -296,6 +302,37 @@ start a new tmuxinator session, type:
 ```bash
 bundle exec rugular tmux
 ```
+
+## Abstracting Bower Components
+
+Rugular allows users to abstract both the ``components`` and ``app`` folder as
+one bower_component, or just the ``components`` folder as a bower_component. A
+new manifest file will be created in the ``release`` folder of your application
+and the version in the ``bower.json`` file will be updated.
+
+### App and Components Bower Component
+
+To create a bower component with both the ``app`` and ``components`` folder
+run:
+
+```bash
+bundle exec rugular abstract
+```
+
+This will create the manifest ``release/#{your_app_name}.js`` file. Running
+this command multiple times will override the file.
+
+### Components Bower Component
+
+To create a bower component with both the ``app`` and ``components`` folder
+run:
+
+```bash
+bundle exec rugular abstract -c
+```
+
+This will also create the manifest ``release/#{your_app_name}.js`` file.
+Running this command multiple times will override the file.
 
 ## Running the tests
 

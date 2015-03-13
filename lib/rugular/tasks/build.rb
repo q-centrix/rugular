@@ -11,11 +11,10 @@ module Rugular
     desc('Creates a minified, compressed version in the dist folder')
 
     def check_for_rugular_directory
-      Rugular::AppChecker.check_rugular!(self.name, new.destination_root)
-    end
-
-    def create_dist_folder
-      FileUtils.mkdir_p('./dist') unless File.directory? './dist'
+      Rugular::AppChecker.check_for_rugular_directory(
+        task_name: name,
+        root_directory: new.destination_root
+      )
     end
 
     def write_dist_index_html_file
@@ -40,10 +39,13 @@ module Rugular
       File.open('dist/application.js', 'w') do |file|
         file.write(
           Uglifier.compile(
-            Rugular::JavascriptFiles.map do |javascript_file|
+
+            Rugular::JavascriptFiles.ordered_array.map do |javascript_file|
               text = File.read(javascript_file).gsub('templateUrl', 'template')
+
               CoffeeScript.compile(text)
             end.join
+
           )
         )
       end
@@ -52,8 +54,11 @@ module Rugular
     def inline_template_url_files
       (Dir.glob("**/*.haml") - ["src/index.haml"]).each do |haml_file|
         haml_html = ::Haml::Engine.new(File.read(haml_file), {}).render
+
         html = haml_html.tr("\n", '').gsub("'", "\'").gsub('"', '\"')
+
         html_filename = haml_file.gsub('src/', '').gsub('haml', 'html')
+
         IO.write('dist/application.js', File.open('dist/application.js') do |f|
           f.read.gsub(html_filename, html)
         end)

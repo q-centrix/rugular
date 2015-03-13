@@ -7,6 +7,12 @@ module Rugular
 
     argument :name, desc: 'Name for your route'
 
+    class_option(
+      :c,
+      type: :boolean,
+      desc: 'create the route in the component folder'
+    )
+
     def self.source_root
       __dir__.chomp('/tasks/generate')
     end
@@ -42,7 +48,6 @@ module Rugular
     end
 
     def template_files; []; end
-    def app_or_component; 'components' end
 
     protected
 
@@ -99,6 +104,10 @@ module Rugular
     def nested_module_file
       "src/#{app_or_component}/#{name.split(':')[0..-2].join('/')}/"\
         "#{nested_module_name}.module.coffee"
+    end
+
+    def app_or_component
+      options[:c] ? 'components' : 'app'
     end
   end
 end
