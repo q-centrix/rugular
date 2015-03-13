@@ -40,7 +40,7 @@ module Rugular
 
     # Protractor needs to be installed globally
     def install_protractor
-      `npm install -g protractor coffee-script mocha`
+      `npm install -g protractor coffee-script jasmine`
     end
   end
 end

@@ -1,18 +1,18 @@
-describe 'AppController', ->
-  controller = undefined
-  beforeEach ->
-    module 'app', ($provide) ->
-      specHelper.fakeStateProvider $provide
-      specHelper.fakeLogger $provide
+describe '<%= camelcase_name %>Controller', ->
+  beforeEach module('auth')
 
-    specHelper.injector ($controller, $q, $rootScope) ->
+  $controller = undefined
 
-    controller = $controller('AppController')
+  beforeEach inject((_$controller_) ->
+    # The injector unwraps the underscores (_) from around the parameter names when matching
+    $controller = _$controller_
 
-  it 'creates', ->
-    expect(controller).to.be.defined
+    return
+  )
 
-  it 'has title', ->
-    expect(controller.title).to.equal 'App'
+  describe 'this.title', ->
+    it 'is initially set to "auth"', ->
+      controller = $controller('<%= camelcase_name %>Controller')
+      expect(controller.title).toEqual '<%= camelcase_name %>'
+      return
 
-  specHelper.verifyNoOutstandingHttpRequests()

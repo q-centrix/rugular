@@ -21,7 +21,7 @@ Feature: Rugular CLI
       """
     And the file "my-app/karma.conf.js" should contain:
       """
-      frameworks: ['mocha', 'chai', 'sinon', 'chai-sinon'],
+      frameworks: ['jasmine', 'sinon'],
       """
     And the file "my-app/src/index.haml" should contain:
       """
