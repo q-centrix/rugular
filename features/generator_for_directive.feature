@@ -4,7 +4,7 @@ Feature: Rugular CLI
   I want to bootstrap the templates necessary to carry this out
 
   Scenario: Generating a route
-    When I set up Rugular and run "rugular generate directive test"
+    When I set up Rugular and run "rugular generate directive -c test"
     Then the file "my-app/src/components/test/test.directive.coffee" should contain:
       """
       angular.module('test').directive('test', test)

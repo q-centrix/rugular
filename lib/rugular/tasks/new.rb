@@ -36,6 +36,14 @@ module Rugular
       empty_directory "#{app_name}/vendor"
     end
 
+    def create_dist_directory
+      empty_directory "#{app_name}/dist"
+    end
+
+    def create_release_directory
+      empty_directory "#{app_name}/release"
+    end
+
     def install_bourbon
       run "cd #{app_name}/vendor && bourbon install "\
         '&& neat install && bitters install'
