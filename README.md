@@ -1,5 +1,5 @@
-![Build
-Status](https://circleci.com/gh/currica/rugular.svg?style=shield&circle-token=:circle-token)
+[![Circle
+CI](https://circleci.com/gh/q-centrix/rugular/tree/master.svg?style=svg)](https://circleci.com/gh/q-centrix/rugular/tree/master)
 
 # Rugular
 
