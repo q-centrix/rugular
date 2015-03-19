@@ -7,8 +7,6 @@ AppRouting = ($stateProvider, $urlRouterProvider) ->
     controller: 'AppController'
     controllerAs: 'app'
 
-  return
-
 AppRouting.$inject = ['$stateProvider', '$urlRouterProvider']
 
 angular.module('app').config(AppRouting)

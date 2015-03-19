@@ -42,8 +42,18 @@ module Rugular
       end
     end
 
-    def write_release_js_file
+    def write_release_js_files
       File.open(release_js, 'w') do |file|
+        file.write(
+          javascript_files.map do |javascript_file|
+            CoffeeScript.compile(
+              File.read(javascript_file).gsub('templateUrl', 'template')
+            )
+          end.join
+        )
+      end
+
+      File.open(release_min_js, 'w') do |file|
         file.write(
           Uglifier.compile(
 
@@ -67,6 +77,10 @@ module Rugular
         html_filename = haml_file.gsub('src/', '').gsub('haml', 'html')
 
         IO.write(release_js, File.open(release_js) do |f|
+          f.read.gsub(html_filename, html)
+        end)
+
+        IO.write(release_min_js, File.open(release_js) do |f|
           f.read.gsub(html_filename, html)
         end)
       end
@@ -101,6 +115,10 @@ module Rugular
     end
 
     def release_js
+      "release/#{app_name}.js"
+    end
+
+    def release_min_js
       "release/#{app_name}.js"
     end
   end
