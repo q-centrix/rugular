@@ -32,6 +32,10 @@ module Rugular
       empty_directory "#{app_name}/src/components"
     end
 
+    def create_asset_directory
+      empty_directory "#{app_name}/src/assets"
+    end
+
     def create_vendor_directory
       empty_directory "#{app_name}/vendor"
     end

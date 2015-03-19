@@ -1,8 +1,8 @@
-<%= name %>Controller = ->
+<%= camelcase_name %>Controller = ->
   @title = '<%= name %>'
 
-<%= name %>Controller.$inject = []
+<%= camelcase_name %>Controller.$inject = []
 
-angular.module('<%= name %>').controller('<%= name %>Controller', <%= name %>Controller)
+angular.module('<%= camelcase_name %>').controller('<%= camelcase_name %>Controller', <%= camelcase_name %>Controller)
 
 

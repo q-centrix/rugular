@@ -18,7 +18,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'actionview',       '~> 4'
-  spec.add_runtime_dependency 'babel-transpiler', '~> 0'
   spec.add_runtime_dependency 'bitters',          '~> 1'
   spec.add_runtime_dependency 'bourbon',          '~> 4'
   spec.add_runtime_dependency 'coffee-script',    '~> 2'

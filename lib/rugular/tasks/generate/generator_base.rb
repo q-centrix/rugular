@@ -74,7 +74,12 @@ module Rugular
     end
 
     def open_struct
-      @_open_struct ||= OpenStruct.new(name: camelcase_name)
+      @_open_struct ||= OpenStruct.new(
+        name: name.split(':').last,
+        full_name: name.gsub(':', '/'),
+        camelcase_name: camelcase_name,
+        app_or_component: app_or_component
+      )
     end
 
     def app_module_file

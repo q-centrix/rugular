@@ -1,13 +1,13 @@
-<%= name %>Routing = ($stateProvider) ->
+<%= camelcase_name %>Routing = ($stateProvider) ->
   $stateProvider.state 'root.<%= name %>',
     url: '<%= name %>'
-    templateUrl: "app/<%= name %>/<%= name %>.html"
-    controller: '<%= name %>Controller'
+    templateUrl: '<%= app_or_component %>/<%= full_name %>/<%= name %>.html'
+    controller: '<%= camelcase_name %>Controller'
     controllerAs: '<%= name %>'
 
   return
 
 <%= name %>Routing.$inject = ['$stateProvider']
 
-angular.module('<%= name %>').config(<%= name %>Routing)
+angular.module('<%= camelcase_name %>').config(<%= camelcase_name %>Routing)
 
