@@ -1,5 +1,5 @@
 describe '<%= camelcase_name %>Controller', ->
-  beforeEach module('auth')
+  beforeEach module('<%= camelcase_name %>')
 
   $controller = undefined
 
@@ -11,7 +11,7 @@ describe '<%= camelcase_name %>Controller', ->
   )
 
   describe 'this.title', ->
-    it 'is initially set to "auth"', ->
+    it 'is initially set to "<%= camelcase_name %>"', ->
       controller = $controller('<%= camelcase_name %>Controller')
       expect(controller.title).toEqual '<%= camelcase_name %>'
       return
