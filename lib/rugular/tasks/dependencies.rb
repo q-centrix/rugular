@@ -27,6 +27,7 @@ module Rugular
       ~~~~~~~~*\o/~~~~~/\*~~~~~~~
       Installing bower components
       BOWER_MESSAGE
+      system('npm install -g bower')
       system('bower install')
     end
 
