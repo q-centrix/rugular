@@ -1,6 +1,6 @@
-AppController = ->
-  @title = 'App'
+appController = ->
+  @title = 'app'
 
-angular.module('app').controller('AppController', AppController)
+angular.module('app').controller('appController', appController)
 
 
