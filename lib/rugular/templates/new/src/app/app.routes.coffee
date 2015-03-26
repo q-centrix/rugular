@@ -4,7 +4,7 @@ AppRouting = ($stateProvider, $urlRouterProvider) ->
   $stateProvider.state 'root',
     url: '/'
     templateUrl: 'app/app.html'
-    controller: 'AppController'
+    controller: 'appController'
     controllerAs: 'app'
 
 AppRouting.$inject = ['$stateProvider', '$urlRouterProvider']
