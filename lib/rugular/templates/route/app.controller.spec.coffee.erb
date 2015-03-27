@@ -4,7 +4,7 @@ describe '<%= name %>Controller', ->
   controller = undefined
 
   beforeEach inject (_$controller_) ->
-    controller = $controller('<%= name %>Controller')
+    controller = $_controller_('<%= name %>Controller')
 
   describe 'this.title', ->
     it 'sets default value', ->
