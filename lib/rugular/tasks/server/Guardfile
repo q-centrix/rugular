@@ -3,4 +3,11 @@ require "#{__dir__}/guards/rugular.rb"
 guard :rugular do
   watch /^src\/.+\.(coffee|haml|png|jpg|ttf|woff)$/
   watch 'bower_components.yaml'
+
+  ignore %r(^bower_components/*)
+  ignore %r(^node_modules/*)
+  ignore %r(^release/*)
+  ignore %r(^dist/*)
+  ignore %r(^vendor/*)
+  ignore %r(^\.tmp/*)
 end
