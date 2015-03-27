@@ -1,18 +1,12 @@
-describe '<%= camelcase_name %>Controller', ->
+describe '<%= name %>Controller', ->
   beforeEach module('<%= camelcase_name %>')
 
-  $controller = undefined
+  controller = undefined
 
-  beforeEach inject((_$controller_) ->
-    # The injector unwraps the underscores (_) from around the parameter names when matching
-    $controller = _$controller_
-
-    return
-  )
+  beforeEach inject (_$controller_) ->
+    controller = _$controller_('<%= name %>Controller')
 
   describe 'this.title', ->
-    it 'is initially set to "<%= camelcase_name %>"', ->
-      controller = $controller('<%= camelcase_name %>Controller')
-      expect(controller.title).toEqual '<%= camelcase_name %>'
+    it 'sets default value', ->
+      expect(controller.title).toEqual '<%= name %>'
       return
-
