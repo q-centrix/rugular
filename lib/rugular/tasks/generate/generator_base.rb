@@ -10,7 +10,7 @@ module Rugular
     class_option(
       :c,
       type: :boolean,
-      desc: 'create the route in the component folder'
+      desc: 'create the resource in the component folder'
     )
 
     def self.source_root
@@ -28,22 +28,6 @@ module Rugular
             open_struct.instance_eval { binding }
           )
         end
-      end
-    end
-
-    def inject_module_into_module
-      if nested?
-        insert_into_file(
-          nested_module_file,
-          module_declaration,
-          after: "angular.module '#{nested_module_name}', [\n"
-        ) unless module_declaration_present?(nested_module_file)
-      else
-        insert_into_file(
-          app_module_file,
-          module_declaration,
-          after: "angular.module 'app', [\n"
-        ) unless module_declaration_present?(app_module_file)
       end
     end
 
