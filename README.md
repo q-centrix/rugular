@@ -1,6 +1,8 @@
 [![Circle
 CI](https://circleci.com/gh/q-centrix/rugular/tree/master.svg?style=svg)](https://circleci.com/gh/q-centrix/rugular/tree/master)
 
+# This project is now deprecated.
+
 # Rugular
 
 Rugular is a framework to build AngularJS 1.3 apps. The goal is to
