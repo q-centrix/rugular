@@ -12,8 +12,8 @@ module Rugular
 
     def check_for_rugular_directory
       ::Rugular::AppChecker.check_for_rugular_directory(
-        task_name: name,
-        root_directory: new.destination_root
+        task_name: self.class.name,
+        root_directory: destination_root
       )
     end
 
