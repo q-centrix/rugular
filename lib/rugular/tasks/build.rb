@@ -11,7 +11,7 @@ module Rugular
     desc('Creates a minified, compressed version in the dist folder')
 
     def check_for_rugular_directory
-      Rugular::AppChecker.check_for_rugular_directory(
+      ::Rugular::AppChecker.check_for_rugular_directory(
         task_name: name,
         root_directory: new.destination_root
       )
