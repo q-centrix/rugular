@@ -25,13 +25,7 @@ module Rugular
 
     def compile_bower_javascript
       File.open('dist/vendor.js', 'w') do |file|
-        file.write(Uglifier.compile(bower_and_vendor_javascript))
-      end
-    end
-
-    def compile_bower_stylesheets
-      File.open('dist/vendor.css', 'w') do |file|
-        file.write bower_css
+        file.write(Uglifier.compile(bower_javascript))
       end
     end
 
@@ -94,31 +88,14 @@ module Rugular
 
     private
 
-    def bower_and_vendor_javascript
-      bower_javascript + vendor_javascript
-    end
-
     def bower_javascript
-      bower_yaml.fetch('bower_components').fetch('js').map do |filename|
+      bower_yaml.fetch('js').map do |filename|
         File.read('bower_components/' + filename)
       end.join
     end
-
-    def vendor_javascript
-      bower_yaml.fetch('vendor').fetch('coffee').map do |filename|
-        CoffeeScript.compile(File.read('vendor/' + filename))
-      end.join
-    end
-
-    def bower_css
-      bower_yaml.fetch('bower_components').fetch('css').map do |filename|
-        File.read('bower_components/' + filename)
-      end.join
-    end
-
 
     def bower_yaml
-      YAML.load(File.read('src/bower_components.yaml'))
+      YAML.load(File.read('bower_components.yaml'))
     end
 
     def lib_directory
