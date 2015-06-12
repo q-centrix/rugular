@@ -34,7 +34,7 @@ module Rugular
         file.write(
           Uglifier.compile(
 
-            Rugular::JavascriptFiles.ordered_array.map do |javascript_file|
+            ::Rugular::JavascriptFiles.ordered_array.map do |javascript_file|
               text = File.read(javascript_file).gsub('templateUrl', 'template')
 
               CoffeeScript.compile(text)
@@ -57,25 +57,6 @@ module Rugular
           f.read.gsub(html_filename, html)
         end)
       end
-    end
-
-    def inject_backend_urls
-      Rugular::BackendURLInjector.inject_urls(
-        config_file: 'config.yaml',
-        constant_file: 'dist/application.js',
-        environment: :production
-      )
-    end
-
-    def add_template_application_sass_file
-      FileUtils.cp(
-        "#{lib_directory}/templates/server/application.sass",
-        "#{destination_root}/.application.sass"
-      )
-    end
-
-    def create_application_css_file
-      `sass .application.sass dist/application.css -r sass-globbing`
     end
 
     def copy_images
