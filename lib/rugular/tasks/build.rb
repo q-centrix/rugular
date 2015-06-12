@@ -59,14 +59,6 @@ module Rugular
       end
     end
 
-    def copy_images
-      FileUtils.cp_r('src/images', 'dist')
-    end
-
-    def copy_fonts
-      FileUtils.cp_r('src/fonts', 'dist')
-    end
-
     private
 
     def bower_javascript
